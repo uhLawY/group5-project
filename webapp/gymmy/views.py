@@ -8,5 +8,8 @@ def home(response):
     return render(response, "gymmy/base.html", {})
 
 def about(response):
-    return render(response, 'gymmy/base.html', {})
+    return render(response, 'gymmy/aboutpage.html', {})
+
+def login(response):
+    return render(response, 'gymmy/login.html', {})
 
