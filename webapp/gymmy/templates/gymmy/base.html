@@ -1,6 +1,7 @@
+{% load static %}
 <html>
     <head>
-        <link rel = "stylesheet" href="static/css/style.css.">
+        <link rel = "stylesheet" href="{% static 'css/style.css' %}">
         <title>Main</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +15,7 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="about.html">About</a></li>
+            <li><a href="templates/aboutpage.html">About</a></li>
             <li><a href="routines.html">Routines</a></li>
             <li><a href="flexcam.html">Flexcam</a></li>
             <li><a href="signup.html" class="signup-link">Sign Up</a></li>
