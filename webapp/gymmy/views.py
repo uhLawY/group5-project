@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
 # Create your views here.
 
 def home(response):
@@ -8,3 +9,4 @@ def home(response):
 
 def about(response):
     return render(response, 'gymmy/base.html', {})
+
