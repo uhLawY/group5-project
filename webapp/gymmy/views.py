@@ -10,3 +10,6 @@ def home(response):
 def about(response):
     return render(response, 'gymmy/aboutpage.html', {})
 
+def login(response):
+    return render(response, 'gymmy/login.html', {})
+
