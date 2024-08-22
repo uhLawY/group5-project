@@ -13,3 +13,6 @@ def about(response):
 def login(response):
     return render(response, 'gymmy/login.html', {})
 
+def signup(response):
+    return render(response, 'gymmy/signup.html', {})
+
