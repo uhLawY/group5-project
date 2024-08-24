@@ -10,6 +10,13 @@
 
 <div class="welcome-container">
   <span class="welcome-text">Welcome Bro, <br>Where the Best Thrives</span>
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        <strong>{{message}}</strong>
+    </div>
+    {% endfor %}
+  {% endif %}
 </div>
 
 <button class="login-btn">
