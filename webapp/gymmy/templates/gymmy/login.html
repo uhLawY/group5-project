@@ -6,7 +6,8 @@
  
 {% block content %}
 <div class="login-form">
-  <form action="" method="POST">
+  <form method="POST" action="{% url 'login' %}" >
+    {% csrf_token %}
 
     <h1>Login</h1>
     <div class="input-box">
@@ -22,7 +23,7 @@
     <button class="btn" type="submit" id="login-button" name="login-button">Login</button>
 
     <div class="register-link">
-      <p>Don't have an account? <a>Register</a></p>
+      <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
     </div>
 
   </form>

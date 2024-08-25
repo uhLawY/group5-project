@@ -9,22 +9,28 @@
   
 <div class="signup-form">
   <div class="form-wrapper">
-    <form action="" class="form-box" method="POST">
+    <form method="POST" action="{% url 'signup' %}" class="form-box" >
       <h1>Sign Up</h1>
+      {% csrf_token %}
 
       <div class="input-box">
-        <input name="username" id="username" type="text" required>
+        {{form.username}}
         <label for="username">Username</label>
       </div>
 
       <div class="input-box">
-        <input name="email" id="email" type="email" required>
+        {{form.email}}
         <label for="email">Email</label>
       </div>
 
       <div class="input-box">
-        <input name="password" id="password" type="password" required>
-        <label for="password">Password</label>
+        {{form.password1}}
+        <label for="password1">Password</label>
+      </div>
+
+      <div class="input-box">
+        {{form.password2}}
+        <label for="password2">Confirm Your Password</label>
       </div>
 
       <button type="submit" class="signup-btn">Sign Up</button>
