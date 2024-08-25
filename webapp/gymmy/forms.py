@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import Profile
 from PIL import Image
+from django.core.exceptions import ValidationError
 
 class UserRegisterForm(UserCreationForm):
     class Meta:

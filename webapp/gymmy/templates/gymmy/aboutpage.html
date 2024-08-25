@@ -1,10 +1,9 @@
+{% extends 'gymmy/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
+{% block css %}<link rel="stylesheet" href="{% static 'css/about.css' %}">{% endblock %}
+
+{% block content %}
     <title>About</title>
-    <link rel = "stylesheet" href="{% static 'css/about.css' %}">
-    <body>
         <div class="wrapper">
             <div class="container">
                 <div class ="card">
@@ -37,5 +36,4 @@
                 </div>
             </div>
         </div>    
-    </body>
-</html>
+{% endblock %}

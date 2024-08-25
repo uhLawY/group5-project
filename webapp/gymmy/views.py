@@ -22,27 +22,28 @@ def login_user(request):
         user = authenticate(username = username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, f'Welcome Back! {username}')
+            messages.success(request, f'Welcome Back! {username}!')
             return redirect('homepage')
         else:
+            messages.success(request,('There was an error logging in!'))
             return redirect('login')
     else:
         return render(request, 'gymmy/login.html', {})
 
 def signup_user(request):
-    form = UserRegisterForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect('login')
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
     else:
         form = UserRegisterForm()
-
-    context = {'form':form}
-    return render(request, 'gymmy/signup.html', context) 
+    return render(request, 'gymmy/signup.html', {'form':form}) 
         
 
 def logout_user(request):
     logout(request)
+    messages.success(request, 'You have been logged out!')
     return redirect('homepage')
 
 
