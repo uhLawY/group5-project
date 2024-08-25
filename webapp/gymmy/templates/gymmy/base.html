@@ -4,6 +4,9 @@
 <html lang="en">
 <head>
     <link rel = "stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+    <link rel="stylesheet"  href="{% static 'css/profile.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% block css %}{% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +25,7 @@
             <li><a href="routines.html">Routines</a></li>
             <li><a href="flexcam.html">Flexcam</a></li>
     {% if user.is_authenticated%}
+        <li><a href="{% url 'profile' %}" class="signup-link">Profile</a></li>
         <li><a href="{% url 'logout' %}" class="signup-link">Logout</a></li>
     {% else %}
         <li><a href="{% url 'login' %}" class="signup-link">Login</a></li>
