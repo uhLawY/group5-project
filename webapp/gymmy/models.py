@@ -34,7 +34,7 @@ class Category(models.Model):
 class Routines(models.Model):
     routine = models.CharField(max_length=30)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    description = models.CharField(max_length=100, default='', blank=True, null=True)
+    description = models.CharField(max_length=500, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/routine/')
 
     def __str__(self):
