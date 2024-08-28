@@ -20,6 +20,29 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+#Models for Routine page
+
+class Category(models.Model):
+    name = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name_plural = 'categories'
+
+class Routines(models.Model):
+    routine = models.CharField(max_length=30)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    description = models.CharField(max_length=100, default='', blank=True, null=True)
+    image = models.ImageField(upload_to='uploads/routine/')
+
+    def __str__(self):
+        return self.routine
+    
+    class Meta:
+        verbose_name_plural = 'routines'
+
 
 class Post(models.Model):
     title= models.CharField(max_length=100)
