@@ -5,7 +5,7 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
-from .models import Profile
+from .models import Profile, Routines
 
 # Create your views here.
 
@@ -45,6 +45,10 @@ def logout_user(request):
     logout(request)
     messages.success(request, 'You have been logged out!')
     return redirect('homepage')
+
+def routinepage(request):
+    routines= Routines.objects.all()
+    return render(request, 'gymmy/routines.html',{'routines':routines})
 
 
 @login_required

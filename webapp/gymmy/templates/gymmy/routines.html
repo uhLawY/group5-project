@@ -1,0 +1,21 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/routines.css' %}">{% endblock %}
+
+{% block content %}
+    <title>About</title>
+    <div class="wrapper">
+        {% for routine in routines %}
+        <div class="container">
+            <div class="card">
+                <div class="front"><img src="{{ routine.image.url }}" alt="Routine Image"></div>
+                <div class="back">
+                    <h1>{{ routine.routine }}</h1>
+                    <h2>{{ routine.category }}</h2>
+                    <p>{{ routine.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
