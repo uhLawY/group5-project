@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm, ProfileUpdateForm
+from .forms import UserUpdateForm, ProfileUpdateForm , PasswordChangeForm
 from .models import Profile, Routines
 
 # Create your views here.
@@ -55,23 +55,43 @@ def routinepage(request):
 def profile_user(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        # Ensure the profile exists
-        if not hasattr(request.user, 'profile'):
-            Profile.objects.create(user=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
+        password_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
+
+        
+        if u_form.is_valid() and p_form.is_valid() and password_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, 'Your Account Has Been Updated!')
-            return redirect('homepage')
+
+            old_password = password_form.cleaned_data.get('old_password')
+            new_password1 = password_form.cleaned_data.get('new_password1')
+            new_password2 = password_form.cleaned_data.get('new_password2')
+
+            if new_password1 == new_password2:
+                if old_password:
+                    password_form.save()
+                    update_session_auth_hash(request, request.user)
+                    messages.success(request, 'Your account and password have been updated!')
+                else:
+                    messages.success(request, 'Your profile has been updated, but no password changes were made.')
+            else:
+                messages.error(request, 'New passwords do not match.')
+
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please fill out all required fields correctly and Refesh.')
+            
     else:
         u_form = UserUpdateForm(instance=request.user)
         if not hasattr(request.user, 'profile'):
             Profile.objects.create(user=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        password_form = PasswordChangeForm(user=request.user)
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'password_form': password_form
     }
     return render(request, 'gymmy/profile.html', context)
