@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm , PasswordChangeForm
 from .models import Profile, Routines
+from .models import Routines
 
 # Create your views here.
 
@@ -45,10 +46,6 @@ def logout_user(request):
     logout(request)
     messages.success(request, 'You have been logged out!')
     return redirect('homepage')
-
-def routinepage(request):
-    routines= Routines.objects.all()
-    return render(request, 'gymmy/routines.html',{'routines':routines})
 
 
 @login_required
@@ -95,3 +92,20 @@ def profile_user(request):
         'password_form': password_form
     }
     return render(request, 'gymmy/profile.html', context)
+
+
+def routines(request):
+    query = request.GET.get('input-box')  # Get the search query from the request
+    if query:
+        # Filter routines that contain the search query in their name or description
+        routines = Routines.objects.filter(routine__icontains=query) | Routines.objects.filter(description__icontains=query)
+    else:
+        # If no query, display all routines
+        routines = Routines.objects.all()
+    
+    return render(request, 'gymmy/routines.html', {'routines': routines})
+
+
+
+
+
