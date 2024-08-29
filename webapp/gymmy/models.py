@@ -20,7 +20,7 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-#Models for Routine page
+# Models for Routine page
 
 class Category(models.Model):
     name = models.CharField(max_length=20)

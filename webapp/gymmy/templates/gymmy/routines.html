@@ -1,8 +1,21 @@
 {% extends 'gymmy/base.html' %}
 {% load static %}
 {% block css %}<link rel="stylesheet" href="{% static 'css/routines.css' %}">{% endblock %}
+{% block title %}Gymmy | Routines{% endblock %}
 
 {% block content %}
+
+    <div class="search-box">
+        <form action="{% url 'routines' %}" method="get">
+            <div class="row">
+                <input type="text" id="input-box" name="input-box" placeholder="Search here">
+                <button type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+
+
+
     <title>About</title>
     <div class="wrapper">
         {% for routine in routines %}
