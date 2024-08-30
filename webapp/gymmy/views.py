@@ -4,7 +4,8 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm, ProfileUpdateForm , PasswordChangeForm
+from .forms import UserUpdateForm, ProfileUpdateForm ,  CustomPasswordResetForm
+from django.contrib.auth.models import User
 from .models import Profile, Routines
 from .models import Routines
 
@@ -53,45 +54,55 @@ def profile_user(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        password_form = PasswordChangeForm(user=request.user, data=request.POST)
+        
         
 
         
-        if u_form.is_valid() and p_form.is_valid() and password_form.is_valid():
+        if u_form.is_valid() and p_form.is_valid() :
             u_form.save()
             p_form.save()
-
-            old_password = password_form.cleaned_data.get('old_password')
-            new_password1 = password_form.cleaned_data.get('new_password1')
-            new_password2 = password_form.cleaned_data.get('new_password2')
-
-            if new_password1 == new_password2:
-                if old_password:
-                    password_form.save()
-                    update_session_auth_hash(request, request.user)
-                    messages.success(request, 'Your account and password have been updated!')
-                else:
-                    messages.success(request, 'Your profile has been updated, but no password changes were made.')
-            else:
-                messages.error(request, 'New passwords do not match.')
-
+            messages.success(request, f'Your Profile Has Been Updated!')
             return redirect('profile')
-        else:
-            messages.error(request, 'Please fill out all required fields correctly and Refesh.')
+
             
     else:
         u_form = UserUpdateForm(instance=request.user)
         if not hasattr(request.user, 'profile'):
             Profile.objects.create(user=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-        password_form = PasswordChangeForm(user=request.user)
+        
 
     context = {
         'u_form': u_form,
         'p_form': p_form,
-        'password_form': password_form
+       
     }
     return render(request, 'gymmy/profile.html', context)
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = CustomPasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            new_password = form.cleaned_data['new_password1']
+
+            try:
+                user = User.objects.get(email=email)
+                user.set_password(new_password)
+                user.save()
+                messages.success(request, 'Your password has been successfully updated!')
+                return redirect('login')
+            except User.DoesNotExist:
+                messages.error(request, 'User does not exist.')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CustomPasswordResetForm()
+
+    return render(request, 'gymmy/reset_password.html', {'form': form})
+
+
 
 
 def routines(request):
