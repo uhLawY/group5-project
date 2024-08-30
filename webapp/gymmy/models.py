@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from PIL import Image
+import os
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -11,15 +12,24 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
     def save(self, *args, **kwargs):
+        # Get the old image file path before saving the new one
+        old_profile = Profile.objects.get(id=self.id) if self.id else None
+        old_image_path = old_profile.image.path if old_profile else None
+
         super().save(*args, **kwargs)
 
+        # Delete the old image from the media folder if a new image is uploaded
+        if old_image_path and os.path.exists(old_image_path) and old_profile.image != self.image:
+            if old_profile.image.name != 'default.jpg':  # Ensure the default image is not deleted
+                os.remove(old_image_path)
+
+        # Resize the new profile picture if necessary
         img = Image.open(self.image.path)
 
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
-
 # Models for Routine page
 
 class Category(models.Model):
