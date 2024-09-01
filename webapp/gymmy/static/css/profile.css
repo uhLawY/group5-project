@@ -74,6 +74,28 @@ body {
   margin: 0 auto; /* Center the form horizontally */
 }
 
+.favourite-container {
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  align-items: center; /* Center the button vertically */
+  text-align: center;
+  color: #fff;
+  width: 100%; /* Make the container take the full width */
+  margin: 20px 0; /* Adjust margin to provide spacing around the button */
+}
+
+.favourite-btn {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 3px 10px;
+  background: #e19f06;
+  border-radius: 20px;
+  border: 2px solid black;
+  display: inline-block; /* Ensures padding applies correctly */
+}
+
+
 .form-background form {
   display: flex;
   flex-direction: column; /* Stack form elements vertically */

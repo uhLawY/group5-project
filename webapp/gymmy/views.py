@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from .forms import UserRegisterForm
@@ -8,6 +8,7 @@ from .forms import UserUpdateForm, ProfileUpdateForm ,  CustomPasswordResetForm
 from django.contrib.auth.models import User
 from .models import Profile, Routines
 from .models import Routines
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -106,17 +107,43 @@ def reset_password(request):
 
 
 def routines(request):
-    query = request.GET.get('input-box')  # Get the search query from the request
+    query = request.GET.get('input-box')
     if query:
-        # Filter routines that contain the search query in their name or description
+        
         routines = Routines.objects.filter(routine__icontains=query) | Routines.objects.filter(description__icontains=query)
     else:
-        # If no query, display all routines
+        
         routines = Routines.objects.all()
     
     return render(request, 'gymmy/routines.html', {'routines': routines})
 
 
 
+@login_required
+def add_to_favourite(request, routine_id):
+    routine = get_object_or_404(Routines, id=routine_id)
+    
+    if routine.favorites.filter(id=request.user.id).exists():
+        routine.favorites.remove(request.user)
+        added = False
+    else:
+        routine.favorites.add(request.user)
+        added = True
+    
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'added': added})
+    
+    return redirect('routines')
 
+
+
+@login_required
+def favourite_routines(request):
+    favourite_routines = Routines.objects.filter(favorites=request.user)
+    favourite_routine_ids = favourite_routines.values_list('id', flat=True)
+    
+    return render(request, 'gymmy/favourite_routines.html', {
+        'favourite_routines': favourite_routines,
+        'favourite_routine_ids': favourite_routine_ids,
+    })
 

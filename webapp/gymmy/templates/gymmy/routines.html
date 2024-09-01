@@ -26,6 +26,18 @@
                     <h1>{{ routine.routine }}</h1>
                     <h2>{{ routine.category }}</h2>
                     <p>{{ routine.description }}</p>
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'add_to_favourite' routine.id %}">
+                        {% csrf_token %}
+                        <button type="submit">
+                            {% if user in routine.favorites.all %}
+                                Remove from Favourite
+                            {% else %}
+                                Add to Favourite
+                            {% endif %}
+                        </button>
+                    </form>
+                {% endif %}
                 </div>
             </div>
         </div>
