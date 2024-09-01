@@ -1,0 +1,41 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/favourite_routines.css' %}">{% endblock %}
+{% block title %}Gymmy | My Favourites{% endblock %}
+
+{% block content %}
+<div class="favourite-container">
+    <h2>My Favourite Routines</h2>
+    {% if favourite_routines %}
+        <div class="wrapper">
+            {% for routine in favourite_routines %}
+            <div class="container">
+                <div class="card">
+                    <div class="front">
+                        <img src="{{ routine.image.url }}" alt="Routine Image">
+                    </div>
+                    <div class="back">
+                        <h1>{{ routine.routine }}</h1>
+                        <h2>{{ routine.category }}</h2>
+                        <p>{{ routine.description }}</p>
+                        
+                        <form class="favourite-form" method="POST" data-url="{% url 'add_to_favourite' routine.id %}" data-id="{{ routine.id }}">
+                            {% csrf_token %}
+                            <button type="submit">
+                                {% if routine.id in favourite_routine_ids %}
+                                    Remove from Favourite
+                                {% else %}
+                                    Add to Favourite
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You haven't added any routines to your favourites yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
