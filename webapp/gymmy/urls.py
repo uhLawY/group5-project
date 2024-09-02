@@ -14,8 +14,7 @@ urlpatterns = [
     path('profile/',views.profile_user, name="profile"),
     path('routines/',views.routines, name="routines"),
     path('reset_password/', views.reset_password, name='reset_password'),
-
-
+    path('routinedetail/<int:pk>',views.routinedetails, name='routinedetails'),
     
     ]
 

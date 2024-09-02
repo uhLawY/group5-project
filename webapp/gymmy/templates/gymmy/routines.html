@@ -25,7 +25,7 @@
                 <div class="back">
                     <h1>{{ routine.routine }}</h1>
                     <h2>{{ routine.category }}</h2>
-                    <p>{{ routine.description }}</p>
+                    <h3><a href= "{% url 'routinedetails' routine.pk %}">View more</a></h3>
                 </div>
             </div>
         </div>

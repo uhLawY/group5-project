@@ -1,0 +1,18 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/routinedetails.css' %}">{% endblock %}
+{% block title %}Gymmy | Routines{% endblock %}
+
+{% block content %}
+
+<div>      
+    <h2><p><strong>General Purpose Application Types</h2></strong></p>
+    <ul>
+       <li class="monke">{{ routine.routine }}</li> 
+       <li class="monke">Media</li>
+       <li class="monke">Personal Interest</li>
+    </ul>
+    <p>- These applications are created to meet the need of a wide variety of users</p>
+    <p>- These help people to increase their efficiency and effectiveness</p>
+ </div>
+ {% endblock %}

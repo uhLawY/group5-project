@@ -116,7 +116,9 @@ def routines(request):
     
     return render(request, 'gymmy/routines.html', {'routines': routines})
 
-
+def routinedetails(request,pk):
+    routinedetails = Routines.objects.get(id=pk)
+    return render(request, 'gymmy/routinedetail.html', {'routinedetails':routinedetails})
 
 
 
