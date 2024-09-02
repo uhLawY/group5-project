@@ -26,10 +26,6 @@
         </div>
         <div class="form-background">
 
-            <div class="favourite-container form-group">
-                <a href="{% url 'favourite_routines' %}" class="favourite-btn">My Favourites</a>
-            </div>
-
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">

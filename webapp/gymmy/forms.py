@@ -32,30 +32,3 @@ class ProfileUpdateForm(forms.ModelForm):
                 img.save(profile.image.path)
         return profile
   
-class CustomPasswordResetForm(forms.Form):
-    email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
-        label="Email"
-    )
-    new_password1 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Enter new password'}),
-        label="New Password"
-    )
-    new_password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm new password'}),
-        label="Confirm Password"
-    )
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password1 = cleaned_data.get("new_password1")
-        password2 = cleaned_data.get("new_password2")
-        email = cleaned_data.get("email")
-
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match!")
-
-        if not User.objects.filter(email=email).exists():
-            raise forms.ValidationError("User with this email does not exist!")
-
-        return cleaned_data

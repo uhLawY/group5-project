@@ -65,14 +65,44 @@ body {
 }
 
 .form-background {
-  background: rgba(255, 255, 255, 0.9); /* Slightly lighter background for form */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Full width */
-  max-width: 600px; /* Limit max width of the form */
-  margin: 0 auto; /* Center the form horizontally */
+  background: linear-gradient(135deg, rgba(144, 15, 15, 0.9), rgba(200, 30, 30, 0.85)); 
+  border-radius: 15px; 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.05); 
+  width: 100%; 
+  max-width: 650px; 
+  margin: 30px auto; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+
+.form-background:hover {
+  transform: translateY(-5px); /* Slight lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.form-background input,
+.form-background button,
+.form-background select {
+  width: 100%;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-background button {
+  background-color: rgba(200, 30, 30, 0.85);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-background button:hover {
+  background-color: rgba(144, 15, 15, 0.9);
+}
+
 
 .favourite-container {
   display: flex;
