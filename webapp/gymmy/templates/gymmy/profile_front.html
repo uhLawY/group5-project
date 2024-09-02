@@ -1,0 +1,33 @@
+{% extends "Gymmy/base.html" %}
+{% load static %}
+{% block title %}Gymmy | Profile{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/profile.css' %}">{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+   
+    <div class="profile-content">
+        <div class="media">
+            <div class="profile-img-container">
+                <img class="account-img" src="{{ user.profile.image.url }}" alt="Profile Image">
+            </div>
+            <div class="profile-info">
+                
+                <h1 class="account-heading">{{ user.username }}</h1>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+        
+
+            <div class="favourite-container form-group">
+                <a href="{% url 'favourite_routines' %}" class="favourite-btn">My Favourites</a>
+            </div>
+
+            <div class="favourite-container form-group">
+                <a href="{% url 'profile' %}" class="favourite-btn">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
