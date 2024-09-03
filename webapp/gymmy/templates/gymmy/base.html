@@ -23,7 +23,7 @@
         <ul class="nav-links">
             <li><a href="{% url 'about' %}">About</a></li>
     {% if user.is_authenticated%}
-        <li><a href="flexcam.html">Flexcam</a></li>
+        <li><a href="{% url 'flexcam' %}">Flexcam</a></li>
         <li><a href="{% url 'routines' %}">Routines</a></li>
         <li><a href="{% url 'profile_front' %}" class="signup-link">Profile</a></li>
         <li><a href="{% url 'logout' %}" class="signup-link">Logout</a></li>

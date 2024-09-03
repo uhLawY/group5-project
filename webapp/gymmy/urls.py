@@ -15,8 +15,10 @@ urlpatterns = [
     path('routines/',views.routines, name="routines"),
     path('profile_front/', views.profile_front, name="profile_front"),
     path('routines/<int:routine_id>/favourite/', views.add_to_favourite, name='add_to_favourite'),
-    path('my-favourites/', views.favourite_routines, name='favourite_routines')
-    
+    path('my-favourites/', views.favourite_routines, name='favourite_routines'),
+    path('flexcam/', views.flexcam, name='flexcam'),
+    path('new-flexcam-post/', views.new_flexcam_post, name='new_flexcam_post'),
+    path('posts/<int:post_id>/comment/', views.add_comment, name='add_comment')
     ]
 
 

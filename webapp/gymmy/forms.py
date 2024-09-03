@@ -32,3 +32,14 @@ class ProfileUpdateForm(forms.ModelForm):
                 img.save(profile.image.path)
         return profile
   
+from .models import FlexcamPost, Comment
+
+class FlexcamPostForm(forms.ModelForm):
+    class Meta:
+        model = FlexcamPost
+        fields = ['title', 'image']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']

@@ -69,3 +69,25 @@ class Post(models.Model):
 
 
 
+class FlexcamPost(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='uploads/flexcam/')
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='flexcam_likes', blank=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-date_posted']  # Orders posts with the latest first
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(FlexcamPost, related_name='comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.post.title}'
