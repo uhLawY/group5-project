@@ -15,8 +15,9 @@ urlpatterns = [
     path('routines/',views.routines, name="routines"),
     path('reset_password/', views.reset_password, name='reset_password'),
     path('routines/<int:routine_id>/favourite/', views.add_to_favourite, name='add_to_favourite'),
-    path('my-favourites/', views.favourite_routines, name='favourite_routines')
-    
+    path('my-favourites/', views.favourite_routines, name='favourite_routines'),
+    path('delete-workout/<int:workout_id>/', views.delete_workout, name='delete_workout'),
+    path('delete-exercise/<int:exercise_id>/', views.delete_exercise, name='delete_exercise'),
     ]
 
 

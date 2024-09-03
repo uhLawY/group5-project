@@ -4,43 +4,68 @@
 {% block title %}Gymmy | Routines{% endblock %}
 
 {% block content %}
+<div class="search-box">
+    <form action="{% url 'routines' %}" method="get">
+        <div class="row">
+            <input type="text" id="input-box" name="input-box" placeholder="Search here">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+</div>
 
-    <div class="search-box">
-        <form action="{% url 'routines' %}" method="get">
-            <div class="row">
-                <input type="text" id="input-box" name="input-box" placeholder="Search here">
-                <button type="submit">Search</button>
+<div class="wrapper">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
             </div>
-        </form>
-    </div>
+        {% endfor %}
+    {% endif %}
 
+    {% for routine in routines %}
+    <div class="container">
+        <div class="card">
+            <div class="front"><img src="{{ routine.image.url }}" alt="Routine Image"></div>
+            <div class="back">
+                <h1>{{ routine.routine }}</h1>
+                <h2>{{ routine.category }}</h2>
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'routines' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="routine_id" value="{{ routine.id }}">
+                    <div>
+                        <label for="workout">Select Existing Workout:</label>
+                        <select name="workout">
+                            <option value="">-- Select a workout --</option>
+                            {% for workout in user.workouts.all %}
+                                <option value="{{ workout.id }}">{{ workout.name }}</option>
+                            {% empty %}
+                                <option value="">No workouts available</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
+                    <div>
+                        <label>Or Create New Workout:</label>
+                        <input type="text" name="new_workout_name" placeholder="New workout name">
+                    </div>
 
-    <title>About</title>
-    <div class="wrapper">
-        {% for routine in routines %}
-        <div class="container">
-            <div class="card">
-                <div class="front"><img src="{{ routine.image.url }}" alt="Routine Image"></div>
-                <div class="back">
-                    <h1>{{ routine.routine }}</h1>
-                    <h2>{{ routine.category }}</h2>
-                    <p>{{ routine.description }}</p>
-                    {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'add_to_favourite' routine.id %}">
-                        {% csrf_token %}
-                        <button type="submit">
-                            {% if user in routine.favorites.all %}
-                                Remove from Favourite
-                            {% else %}
-                                Add to Favourite
-                            {% endif %}
-                        </button>
-                    </form>
+                    <div>
+                        <label for="reps">Reps:</label>
+                        <input type="number" name="reps" min="1" required>
+                    </div>
+
+                    <div>
+                        <label for="sets">Sets:</label>
+                        <input type="number" name="sets" min="1" required>
+                    </div>
+
+                    <button type="submit">Add to Workout</button>
+                </form>
                 {% endif %}
-                </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 {% endblock %}

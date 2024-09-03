@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Profile
+from .models import Profile, Workout
 from PIL import Image
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -14,8 +14,6 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username']
-
-
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
@@ -59,3 +57,14 @@ class CustomPasswordResetForm(forms.Form):
             raise forms.ValidationError("User with this email does not exist!")
 
         return cleaned_data
+    
+class AddToWorkoutForm(forms.Form):
+    workout = forms.ModelChoiceField(queryset=Workout.objects.all(), required=True)
+    reps = forms.IntegerField(min_value=1, required=True, label='Reps')
+    sets = forms.IntegerField(min_value=1, required=True, label='Reps')
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['workout'].queryset = Workout.objects.filter(user=user)
