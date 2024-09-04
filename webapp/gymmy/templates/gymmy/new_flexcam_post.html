@@ -4,10 +4,12 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/flexcam.css' %}">
 {% endblock %}
-    <h2>New Flexcam Post</h2>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Post</button>
-    </form>
+    <div class="new-post-container">
+        <h2 class="new-post-heading">New Flexcam Post</h2>
+        <form method="POST" enctype="multipart/form-data" class="new-post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
 {% endblock %}

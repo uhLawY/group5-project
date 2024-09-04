@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Profile
+from .models import Profile, FlexcamPost, Comment
 from PIL import Image
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -32,7 +32,7 @@ class ProfileUpdateForm(forms.ModelForm):
                 img.save(profile.image.path)
         return profile
   
-from .models import FlexcamPost, Comment
+# forms for flexcam 
 
 class FlexcamPostForm(forms.ModelForm):
     class Meta:

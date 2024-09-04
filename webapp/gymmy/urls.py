@@ -18,7 +18,9 @@ urlpatterns = [
     path('my-favourites/', views.favourite_routines, name='favourite_routines'),
     path('flexcam/', views.flexcam, name='flexcam'),
     path('new-flexcam-post/', views.new_flexcam_post, name='new_flexcam_post'),
-    path('posts/<int:post_id>/comment/', views.add_comment, name='add_comment')
+    path('posts/<int:post_id>/comment/', views.add_comment, name='add_comment'),
+    path('like-flexcam-post/<int:post_id>/', views.like_flexcam_post, name='like_flexcam_post'),
+    
     ]
 
 

@@ -16,51 +16,76 @@ body {
 /* Navbar */
 .navbar {
     width: 100%;
-    background-color: #ffffff;
+    background-color: black; /* Match the base navbar color */
     border-bottom: 1px solid #dbdbdb;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    padding: 11.5px 20px;
+    align-items: center;
+    min-height: 8vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 .navbar-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
+    width: 100%; /* Ensure full-width layout */
 }
 
 .logo a {
-    font-size: 24px;
+    font-size: 30px; /* Match base navbar font size */
     font-weight: bold;
-    color: #262626;
+    color: #e19f06; /* Match the color from base */
     text-decoration: none;
+    letter-spacing: 5px;
+}
+
+.logo a:hover {
+    color: #fdbd29; /* Hover color from base */
 }
 
 .navbar-links {
+    list-style: none;
+    width: 50%; /* Match the base width */
     display: flex;
-    gap: 20px;
+    justify-content: space-around;
 }
 
 .nav-link {
-    font-size: 16px;
-    color: #262626;
+    font-size: 16px; /* Match base font size */
+    color: rgb(226, 226, 226);
     text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    transition: all 0.1s ease-in-out;
 }
 
 .nav-link:hover {
-    color: #0095f6;
+    color: white; /* Match base hover color */
 }
 
 .burger {
-    display: none;
+    display: none; /* Default to hidden, show on mobile */
+    cursor: pointer;
 }
 
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: rgb(225, 225, 225);
+    margin: 5px;
+}
+
+/* Post Container */
 .flexcam-container {
     width: 100%;
     max-width: 600px;
-    margin: 70px auto 0;
+    margin: 120px auto 0; /* Adjusted top margin to add more space between navbar and container */
     padding: 20px;
     background-color: #ffffff;
 }

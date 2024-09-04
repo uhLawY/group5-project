@@ -1,11 +1,16 @@
 {% extends 'gymmy/base.html' %}
+{% load static %}
 {% block content %}
-
-    <h2>Add Comment</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Comment</button>
-    </form>
-    <a href="{% url 'flexcam' %}">Back to Flexcam</a>
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/flexcam.css' %}">
+{% endblock %}
+    <div class="comment-container">
+        <h2 class="comment-heading">Add Comment</h2>
+        <form method="POST" class="comment-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+        <a href="{% url 'flexcam' %}" class="back-link">Back to Flexcam</a>
+    </div>
 {% endblock %}

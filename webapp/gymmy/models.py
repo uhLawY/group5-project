@@ -67,8 +67,7 @@ class Post(models.Model):
 
 
 
-
-
+# Models for Flexcam page
 class FlexcamPost(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='uploads/flexcam/')

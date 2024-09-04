@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm , FlexcamPostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm 
 from django.contrib.auth.models import User
-from .models import Profile, Routines
-from .models import Routines
+from .models import Profile, Routines , FlexcamPost
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 
 # Create your views here.
@@ -129,16 +129,13 @@ def favourite_routines(request):
     })
 
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import FlexcamPost, Comment
-from .forms import FlexcamPostForm, CommentForm
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+
+
 
 @login_required
 def flexcam(request):
     posts_list = FlexcamPost.objects.all()
-    paginator = Paginator(posts_list, 10)  # Show 10 posts per page
+    paginator = Paginator(posts_list, 6)  # Show 10 posts per page
 
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)
@@ -158,7 +155,6 @@ def new_flexcam_post(request):
         form = FlexcamPostForm()
     return render(request, 'gymmy/new_flexcam_post.html', {'form': form})
 
-@login_required
 def like_flexcam_post(request, post_id):
     post = get_object_or_404(FlexcamPost, id=post_id)
     liked = False
