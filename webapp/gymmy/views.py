@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm , FlexcamPostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm 
 from django.contrib.auth.models import User
-from .models import Profile, Routines
-from .models import Routines
+from .models import Profile, Routines , FlexcamPost
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 
 # Create your views here.
@@ -128,3 +128,58 @@ def favourite_routines(request):
         'favourite_routine_ids': favourite_routine_ids,
     })
 
+
+
+
+
+@login_required
+def flexcam(request):
+    posts_list = FlexcamPost.objects.all()
+    paginator = Paginator(posts_list, 6)  # Show 10 posts per page
+
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    
+    return render(request, 'gymmy/flexcam.html', {'posts': posts})
+
+@login_required
+def new_flexcam_post(request):
+    if request.method == 'POST':
+        form = FlexcamPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('flexcam')
+    else:
+        form = FlexcamPostForm()
+    return render(request, 'gymmy/new_flexcam_post.html', {'form': form})
+
+def like_flexcam_post(request, post_id):
+    post = get_object_or_404(FlexcamPost, id=post_id)
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'liked': liked, 'like_count': post.likes.count()})
+    
+    return redirect('flexcam')
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(FlexcamPost, id=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('flexcam')
+    else:
+        form = CommentForm()
+    return render(request, 'gymmy/add_comment.html', {'form': form, 'post': post})

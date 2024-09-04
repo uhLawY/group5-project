@@ -1,0 +1,203 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 0%, rgba(0,212,255,1) 100%);
+    color: #262626;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    background-color: black; /* Match the base navbar color */
+    border-bottom: 1px solid #dbdbdb;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    padding: 11.5px 20px;
+    align-items: center;
+    min-height: 8vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Ensure full-width layout */
+}
+
+.logo a {
+    font-size: 30px; /* Match base navbar font size */
+    font-weight: bold;
+    color: #e19f06; /* Match the color from base */
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+
+.logo a:hover {
+    color: #fdbd29; /* Hover color from base */
+}
+
+.navbar-links {
+    list-style: none;
+    width: 50%; /* Match the base width */
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-link {
+    font-size: 16px; /* Match base font size */
+    color: rgb(226, 226, 226);
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    transition: all 0.1s ease-in-out;
+}
+
+.nav-link:hover {
+    color: white; /* Match base hover color */
+}
+
+.burger {
+    display: none; /* Default to hidden, show on mobile */
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: rgb(225, 225, 225);
+    margin: 5px;
+}
+
+/* Post Container */
+.flexcam-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 120px auto 0; /* Adjusted top margin to add more space between navbar and container */
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* Post */
+.flexcam-post {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+/* Post Header */
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+}
+
+.author-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.author-name {
+    font-weight: bold;
+    color: #262626;
+    text-decoration: none;
+}
+
+.post-date {
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+/* Post Image */
+.post-image img {
+    width: 100%;
+}
+
+/* Post Actions */
+.post-actions {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.like-btn i {
+    font-size: 24px;
+}
+
+.like-count {
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.comment-link {
+    font-size: 14px;
+    color: #8e8e8e;
+    text-decoration: none;
+}
+
+/* Post Title */
+.post-title {
+    padding: 0 15px;
+    margin: 10px 0;
+}
+
+/* Post Comments */
+.post-comments {
+    padding: 0 15px 15px;
+}
+
+.comment {
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+.pagination a {
+    color: #0095f6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination .current-page {
+    color: #8e8e8e;
+}

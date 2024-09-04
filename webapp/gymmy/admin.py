@@ -6,3 +6,8 @@ admin.site.register(Post)
 admin.site.register(Profile)
 admin.site.register(Category)
 admin.site.register(Routines)
+
+from .models import FlexcamPost, Comment
+
+admin.site.register(FlexcamPost)
+admin.site.register(Comment)
