@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import Profile, FlexcamPost, Comment
+from .models import Profile, FlexcamPost, Comment, Workout
 from PIL import Image
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
@@ -43,3 +43,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+

@@ -20,6 +20,9 @@ urlpatterns = [
     path('new-flexcam-post/', views.new_flexcam_post, name='new_flexcam_post'),
     path('posts/<int:post_id>/comment/', views.add_comment, name='add_comment'),
     path('like-flexcam-post/<int:post_id>/', views.like_flexcam_post, name='like_flexcam_post'),
+    path('my_workouts/', views.my_workouts, name='my_workouts'),
+    path('delete-workout/<int:workout_id>/', views.delete_workout, name='delete_workout'),
+    path('delete-exercise/<int:exercise_id>/', views.delete_exercise, name='delete_exercise'),
     
     ]
 

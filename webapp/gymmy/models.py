@@ -90,3 +90,19 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
+    
+class Workout(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='workouts')
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+class WorkoutExercise(models.Model):
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='exercises')
+    routine = models.ForeignKey(Routines, on_delete=models.CASCADE)
+    reps = models.PositiveIntegerField(default=1)  
+    sets = models.PositiveIntegerField(default=1)  
+
+    def __str__(self):
+        return f'{self.routine.routine} - {self.reps} reps, {self.sets} sets'

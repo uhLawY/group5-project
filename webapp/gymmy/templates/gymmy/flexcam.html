@@ -1,15 +1,9 @@
+{% extends 'gymmy/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/flexcam.css' %}">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <title>Flexcam</title>
-</head>
-<body>
+{% block css %}<link rel="stylesheet" href="{% static 'css/flexcam.css' %}">{% endblock %}
+{% block title %}Gymmy | Flexcam{% endblock %}
+
+{% block content %}
     <nav class="navbar">
         <div class="navbar-content">
             <div class="logo">
@@ -113,6 +107,5 @@
     
 
     <script src="{% static 'js/base.js' %}"></script>
-    
-</body>
-</html>
+
+{% endblock %}
