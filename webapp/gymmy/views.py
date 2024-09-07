@@ -112,20 +112,18 @@ def routines(request):
         routines = Routines.objects.all()
     
     if request.method == 'POST':
-        # Handle the form submission for adding routines to workouts
+
         routine_id = request.POST.get('routine_id')
         routine = get_object_or_404(Routines, id=routine_id)
 
         new_workout_name = request.POST.get('new_workout_name', '').strip()
         selected_workout_id = request.POST.get('workout')
 
-        # Check if both fields are filled or both are empty
         if new_workout_name and selected_workout_id:
             messages.error(request, 'Please choose either to select an existing workout or create a new one, not both.')
         elif not new_workout_name and not selected_workout_id:
             messages.error(request, 'Please select an existing workout or enter a new workout name.')
         elif new_workout_name:
-            # Create a new workout
             workout = Workout.objects.create(user=request.user, name=new_workout_name)
             reps = int(request.POST.get('reps', 1))
             sets = int(request.POST.get('sets', 1))
@@ -137,7 +135,6 @@ def routines(request):
             )
             messages.success(request, f'New workout "{workout.name}" created and exercise added successfully!')
         else:
-            # Add to an existing workout
             try:
                 workout = Workout.objects.get(id=selected_workout_id, user=request.user)
                 reps = int(request.POST.get('reps', 1))
