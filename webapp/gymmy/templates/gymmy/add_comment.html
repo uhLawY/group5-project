@@ -4,6 +4,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/flexcam.css' %}">
 {% endblock %}
+<body class="flexcam-page"></body>
     <div class="comment-container">
         <h2 class="comment-heading">Add Comment</h2>
         <form method="POST" class="comment-form">
@@ -13,4 +14,5 @@
         </form>
         <a href="{% url 'flexcam' %}" class="back-link">Back to Flexcam</a>
     </div>
+</body>
 {% endblock %}

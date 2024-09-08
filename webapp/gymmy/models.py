@@ -48,6 +48,7 @@ class Routines(models.Model):
     description = models.CharField(max_length=500, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/routine/')
     favorites = models.ManyToManyField(User, related_name='favourite_routines', blank=True)
+    
 
     def __str__(self):
         return self.routine
@@ -74,9 +75,16 @@ class FlexcamPost(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='flexcam_likes', blank=True)
+    
 
     def __str__(self):
         return self.title
+
+    def like_count(self):
+        return self.likes.count()
+
+    def liked_by(self):
+        return self.likes.all()
 
     class Meta:
         ordering = ['-date_posted']  # Orders posts with the latest first
