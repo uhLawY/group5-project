@@ -1,0 +1,20 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/exercise_details.css' %}">{% endblock %}
+{% block title %}Gymmy | Exercise Details{% endblock %}
+
+{% block content %}
+<div class="exercise-details-container">
+    <h2>{{ routine.routine }}</h2>
+    <img src="{{ routine.image.url }}" alt="Routine Image" class="exercise-image">
+    <h3>Category: {{ routine.category.name }}</h3>
+    <p><strong>Description:</strong> <br> {{ routine.description }}</p>
+    {% if routine.instructions %}
+        <p><strong>Instructions:</strong> <br> {{ routine.instructions }}</p>
+    {% endif %}
+    {% if routine.benefits %}
+        <p><strong>Benefits:</strong> {{ routine.benefits }}</p>
+    {% endif %}
+    <a href="{% url 'routines' %}" class="btn">Back to Routines</a>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+/* General Styles */
+
+* {
+  padding: 0;
+  margin: 0 ;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #1a1a1a; /* Dark background */
+  color: #e0e0e0; /* Light text color */
+  margin: 0;
+  padding-top: 50px;
+}
+
+.exercise-details-container {
+  max-width: 800px; /* Limits the width of the content */
+  margin: 50px auto; /* Centers the container and adds margin */
+  padding: 20px;
+  background-color: #2a2a2a; /* Slightly lighter background for contrast */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  text-align: center; /* Center align text */
+}
+
+/* Header Styles */
+.exercise-details-container h2 {
+  color: #fdbd29; /* Accent color for the exercise title */
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* Image Styling */
+.exercise-image {
+  width: 100%; /* Make image responsive */
+  max-height: 300px; /* Limit the height */
+  object-fit: cover; /* Ensure the image covers the space */
+  border-radius: 8px; /* Rounded corners for the image */
+  margin-bottom: 20px;
+  border: 3px solid #fdbd29; /* Accent border for the image */
+}
+
+/* Subheading Styles */
+.exercise-details-container h3 {
+  color: #e19f06; /* Different accent color */
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+/* Paragraph Text */
+.exercise-details-container p {
+  font-size: 1.1em;
+  line-height: 1.6; /* Increases readability */
+  margin-bottom: 15px;
+}
+
+/* Back Button Styling */
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #e19f06; /* Accent color */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn:hover {
+  background-color: #fdbd29; /* Lighter shade on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .exercise-details-container {
+      padding: 15px;
+      margin: 20px;
+  }
+  
+  .exercise-details-container h2 {
+      font-size: 2em;
+  }
+
+  .exercise-details-container h3 {
+      font-size: 1.5em;
+  }
+
+  .exercise-image {
+      max-height: 200px; /* Smaller height for smaller screens */
+  }
+}

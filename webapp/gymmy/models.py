@@ -48,7 +48,8 @@ class Routines(models.Model):
     description = models.CharField(max_length=500, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/routine/')
     favorites = models.ManyToManyField(User, related_name='favourite_routines', blank=True)
-    
+    instructions = models.TextField(blank=True, null=True)  
+    benefits = models.TextField(blank=True, null=True)  
 
     def __str__(self):
         return self.routine

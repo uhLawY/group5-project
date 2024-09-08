@@ -32,6 +32,9 @@
             <div class="back">
                 <h1>{{ routine.routine }}</h1>
                 <h2>{{ routine.category }}</h2>
+
+                <a href="{% url 'exercise_details' routine.id %}" class="details-btn">Exercise Details</a>
+
                 {% if user.is_authenticated %}
                 <form method="POST" action="{% url 'routines' %}">
                     {% csrf_token %}

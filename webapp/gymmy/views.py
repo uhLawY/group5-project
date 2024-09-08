@@ -256,3 +256,9 @@ def add_comment(request, post_id):
     else:
         form = CommentForm()
     return render(request, 'gymmy/add_comment.html', {'form': form, 'post': post})
+
+
+@login_required
+def exercise_details(request, routine_id):
+    routine = get_object_or_404(Routines, id=routine_id)
+    return render(request, 'gymmy/exercise_details.html', {'routine': routine})
