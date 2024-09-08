@@ -23,7 +23,8 @@ urlpatterns = [
     path('my_workouts/', views.my_workouts, name='my_workouts'),
     path('delete-workout/<int:workout_id>/', views.delete_workout, name='delete_workout'),
     path('delete-exercise/<int:exercise_id>/', views.delete_exercise, name='delete_exercise'),
-    path('profile/<str:username>/', views.see_profile, name='see_profile')
+    path('profile/<str:username>/', views.see_profile, name='see_profile'),
+    path('exercise/<int:routine_id>/', views.exercise_details, name='exercise_details'),
     
     ]
 

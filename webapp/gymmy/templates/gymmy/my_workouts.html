@@ -26,9 +26,12 @@
                         <li>
                             <strong>{{ exercise.routine.routine }}</strong> - 
                             {{ exercise.sets }} sets of {{ exercise.reps }} reps
+                            
+                            <a href="{% url 'exercise_details' exercise.routine.id %}" class="btn btn-info">Exercise Details</a>
                             <form method="POST" action="{% url 'delete_exercise' exercise.id %}" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this workout?');">Delete Exercise</button>
+                                
                             </form>
                         </li>
                     {% empty %}
