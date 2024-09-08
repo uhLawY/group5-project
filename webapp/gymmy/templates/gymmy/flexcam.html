@@ -4,33 +4,18 @@
 {% block title %}Gymmy | Flexcam{% endblock %}
 
 {% block content %}
-    <nav class="navbar">
-        <div class="navbar-content">
-            <div class="logo">
-                <a href="{% url 'homepage' %}">GYMMY</a>
-            </div>
-            <div class="navbar-links">
-                <a href="{% url 'new_flexcam_post' %}" class="nav-link">Create Post</a>
-                <a href="{% url 'flexcam' %}" class="nav-link">Flexcam</a>
-                <a href="{% url 'routines' %}" class="nav-link">Routines</a>
-                <a href="{% url 'profile_front' %}" class="nav-link">Profile</a>
-                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-            </div>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </div>
-    </nav>
-
+<body class="flexcam-page">
     <div class="flexcam-container">
         {% for post in posts %}
         <div class="flexcam-post">
             <div class="post-header">
                 <div class="author-info">
-                    <img src="{{ post.author.profile.image.url }}" alt="{{ post.author.username }}" class="author-image">
-                    <a href="#" class="author-name">{{ post.author.username }}</a>
+                    <a href="{% url 'see_profile' post.author.username %}">
+                        <img src="{{ post.author.profile.image.url }}" alt="{{ post.author.username }}" class="author-image">
+                    </a>
+                    <a href="{% url 'see_profile' post.author.username %}" class="author-name">{{ post.author.username }}</a>
+
+
                 </div>
                 <div class="post-date">
                     <span>{{ post.date_posted }}</span>
@@ -43,14 +28,16 @@
                 <img src="{{ post.image.url }}" alt="{{ post.title }}">
             </div>
             <div class="post-actions">
-                <button class="like-btn" data-post-id="{{ post.id }}">
-                    {% if user in post.likes.all %}
-                    <i class="bx bxs-heart liked"></i>
-                    {% else %}
-                    <i class="bx bx-heart"></i>
-                    {% endif %}
-                </button>
-                <span class="like-count">{{ post.likes.count }}</span>
+                <div class="button-wrapper">
+                    <button class="like-btn" data-post-id="{{ post.id }}">
+                        {% if user in post.likes.all %}
+                        <i class="bx bxs-heart liked"></i>
+                        {% else %}
+                        <i class="bx bx-heart"></i>
+                        {% endif %}
+                    </button>
+                    <span class="like-count">{{ post.likes.count }}</span>
+                </div>
                 <a href="{% url 'add_comment' post.id %}" class="comment-link">Comments</a>
             </div>
             
@@ -65,6 +52,7 @@
         </div>
         {% endfor %}
     </div>
+    
 
     <div class="pagination">
         {% if posts.has_previous %}
@@ -77,35 +65,35 @@
         <a href="?page={{ posts.next_page_number }}">Next</a>
         {% endif %}
     </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.like-btn').click(function(){
+            var postId = $(this).data('post-id');
+            var likeBtn = $(this);
+            var likeCount = $(this).next('.like-count');
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.like-btn').click(function(){
-                var postId = $(this).data('post-id');
-                var likeBtn = $(this);
-                var likeCount = $(this).next('.like-count');
-
-                $.ajax({
-                    url: "{% url 'like_flexcam_post' 0 %}".replace(0, postId),
-                    type: 'POST',
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}',
-                    },
-                    success: function(response){
-                        if(response.liked){
-                            likeBtn.find('i').removeClass('bx-heart').addClass('bxs-heart liked');
-                        } else {
-                            likeBtn.find('i').removeClass('bxs-heart liked').addClass('bx-heart');
-                        }
-                        likeCount.text(response.like_count);
+            $.ajax({
+                url: "{% url 'like_flexcam_post' 0 %}".replace(0, postId),
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(response){
+                    if(response.liked){
+                        likeBtn.find('i').removeClass('bx-heart').addClass('bxs-heart liked');
+                    } else {
+                        likeBtn.find('i').removeClass('bxs-heart liked').addClass('bx-heart');
                     }
-                });
+                    likeCount.text(response.like_count);
+                }
             });
         });
-    </script>
-    
+    });
+</script>
 
-    <script src="{% static 'js/base.js' %}"></script>
+
+<script src="{% static 'js/base.js' %}"></script>
 
 {% endblock %}

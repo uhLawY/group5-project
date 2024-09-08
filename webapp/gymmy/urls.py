@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from .views import profile_front
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     path('my_workouts/', views.my_workouts, name='my_workouts'),
     path('delete-workout/<int:workout_id>/', views.delete_workout, name='delete_workout'),
     path('delete-exercise/<int:exercise_id>/', views.delete_exercise, name='delete_exercise'),
+    path('profile/<str:username>/', views.see_profile, name='see_profile')
     
     ]
 

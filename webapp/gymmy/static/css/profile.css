@@ -1,18 +1,20 @@
-* * {
+/* profile.css */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
 
-body {
+body.profile-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('https://images.playground.com/b227ab86d7e447cb92f7b2a38bf92e0c.jpeg') no-repeat center center;
+  background: url('https://th.bing.com/th/id/OIP.VAq7IdsyM_O1V-7xeouLSgHaE7?rs=1&pid=ImgDetMain') no-repeat center center;
   background-size: cover;
 }
+
 
 .profile-container {
   width: 100%;

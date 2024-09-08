@@ -84,6 +84,16 @@ def profile_user(request):
 def profile_front(request):
     return render(request, 'gymmy/profile_front.html')
 
+@login_required
+def see_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    if user == request.user:
+        return redirect('profile_front')
+    else:
+        return render(request, 'gymmy/see_profile.html', {'user': user})
+
+
+
 def my_workouts(request):
     workouts = Workout.objects.filter(user=request.user)
     return render(request, 'gymmy/my_workouts.html', {'workouts': workouts})
@@ -192,7 +202,7 @@ def favourite_routines(request):
 @login_required
 def flexcam(request):
     posts_list = FlexcamPost.objects.all()
-    paginator = Paginator(posts_list, 6)  # Show 10 posts per page
+    paginator = Paginator(posts_list, 6)  # Show 6 posts per page
 
     page_number = request.GET.get('page')
     posts = paginator.get_page(page_number)

@@ -1,11 +1,12 @@
+<!-- profile.html -->
 {% extends "Gymmy/base.html" %}
 {% load static %}
 {% block title %}Gymmy | Profile{% endblock %}
 {% block css %}<link rel="stylesheet" href="{% static 'css/profile.css' %}">{% endblock %}
 
 {% block content %}
+<body class="profile-page">
 <div class="profile-container">
-   
     <div class="profile-content">
         <div class="media">
             <div class="profile-img-container">
@@ -18,14 +19,12 @@
                             {{ message }}
                         </div>
                     {% endfor %}
-                
                 {% endif %}
                 <h1 class="account-heading">{{ user.username }}</h1>
                 <p class="text-secondary">{{ user.email }}</p>
             </div>
         </div>
         <div class="form-background">
-
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
@@ -33,13 +32,13 @@
                     {{ u_form.username }}
                 </div>
                 <div class="form-group">
-                        <label for="id_image">Profile Image</label>
-                        {{ p_form.image }}
-                    
-            
+                    <label for="id_image">Profile Image</label>
+                    {{ p_form.image }}
+                </div>
                 <button type="submit" class="btn-primary">Update</button>
             </form>
         </div>
     </div>
 </div>
+</body>
 {% endblock %}

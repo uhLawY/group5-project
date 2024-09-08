@@ -1,5 +1,5 @@
 <!-- profile_front.html -->
-{% extends "Gymmy/base.html" %}
+{% extends "gymmy/base.html" %}
 {% load static %}
 {% block title %}Gymmy | Profile{% endblock %}
 {% block css %}<link rel="stylesheet" href="{% static 'css/profile.css' %}">{% endblock %}
@@ -23,9 +23,7 @@
         <div class="favourite-container form-group">
             <a href="{% url 'favourite_routines' %}" class="favourite-btn">My Favourites</a>
         </div>
-        <div class="favourite-container form-group">
-            <a href="{% url 'profile' %}" class="favourite-btn">Edit Profile</a>
-        </div>
+       
     </div>
 </div>
 </body>
