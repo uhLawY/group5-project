@@ -37,7 +37,24 @@ body {
     flex-wrap: wrap;
     justify-items: center;
 } */
+.alert {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #ffefc5;
+    border-color: #ffdd99;
+    color: #856404;
+}
 
+.alert .close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: #856404;
+    cursor: pointer;
+}
 .wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
@@ -229,12 +246,6 @@ button:hover {
 button:active {
     background-color: #d48904;
     transform: scale(0.95); 
-}
-
-.alert {
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
 }
 
 .details-btn {

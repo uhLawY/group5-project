@@ -11,7 +11,8 @@ body.profile-page {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('https://th.bing.com/th/id/OIP.VAq7IdsyM_O1V-7xeouLSgHaE7?rs=1&pid=ImgDetMain') no-repeat center center;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 100%, rgba(0,212,255,1) 100%);
   background-size: cover;
 }
 
@@ -19,7 +20,7 @@ body.profile-page {
 .profile-container {
   width: 100%;
   max-width: 800px;
-  background: transparent;
+  background: #f9f9f9;
   border: 2px solid rgba(136, 118, 118, 0.2);
   backdrop-filter: blur(15px);
   box-shadow: 0 0 10px rgba(136, 118, 118, 0.2);

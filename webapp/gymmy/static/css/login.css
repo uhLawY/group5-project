@@ -15,6 +15,25 @@ body {
   background-position: center;
 }
 
+.alert {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #ffefc5;
+  border-color: #ffdd99;
+  color: #856404;
+}
+
+.alert .close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: #856404;
+  cursor: pointer;
+}
+
 .login-form {
   width: 420px;
   background: transparent;

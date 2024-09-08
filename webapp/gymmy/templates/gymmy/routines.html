@@ -12,26 +12,25 @@
         </div>
     </form>
 </div>
+{% if messages %}
+{% for message in messages%}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endfor %}
+{% endif %}
 
 <div class="wrapper">
-    {% if messages %}
-    {% for message in messages%}
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    {% endfor %}
-    {% endif %}
 
     {% for routine in routines %}
     <div class="container">
         <div class="card">
             <div class="front"><img src="{{ routine.image.url }}" alt="Routine Image"></div>
             <div class="back">
-                <h1>{{ routine.routine }}</h1>
-                <h2>{{ routine.category }}</h2>
+                <h2>{{ routine.routine }}</h2>
 
                 <a href="{% url 'exercise_details' routine.id %}" class="details-btn">Exercise Details</a>
 
@@ -73,5 +72,7 @@
         </div>
     </div>
     {% endfor %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </div>
 {% endblock %}
