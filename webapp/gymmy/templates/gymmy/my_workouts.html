@@ -16,7 +16,7 @@
       </div>
     {% endfor %}
     {% endif %}
-    <h2>My Workouts</h2>
+    <h2>{{ profile_user.username }}'s Workouts</h2>
     {% if workouts %}
         {% for workout in workouts %}
             <div class="workout">

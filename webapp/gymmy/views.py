@@ -90,14 +90,20 @@ def see_profile(request, username):
     if user == request.user:
         return redirect('profile_front')
     else:
-        return render(request, 'gymmy/see_profile.html', {'user': user})
+        # Fetch the workouts of the user whose profile is being viewed
+        workouts = Workout.objects.filter(user=user)
+        return render(request, 'gymmy/see_profile.html', {'user': user, 'workouts': workouts})
 
+def my_workouts(request, username=None):
+    if username:
+        # Viewing another user's workouts
+        user = get_object_or_404(User, username=username)
+    else:
+        # Viewing the logged-in user's workouts
+        user = request.user
 
-
-def my_workouts(request):
-    workouts = Workout.objects.filter(user=request.user)
-    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts})
-
+    workouts = Workout.objects.filter(user=user)
+    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user})
 
 
 def routines(request):
