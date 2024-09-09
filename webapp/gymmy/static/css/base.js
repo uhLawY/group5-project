@@ -39,3 +39,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    
+    console.log('DOM fully loaded and parsed');
+    
+    const createWorkoutButton = document.getElementById('create-workout-button');
+    const newWorkoutForm = document.getElementById('new-workout-form');
+
+    if (createWorkoutButton && newWorkoutForm) {
+        createWorkoutButton.addEventListener('click', function () {
+            if (newWorkoutForm.style.display === 'none' || newWorkoutForm.style.display === '') {
+                newWorkoutForm.style.display = 'block';
+            } else {
+                newWorkoutForm.style.display = 'none';
+            }
+        });
+    }
+
+    
+    const addExerciseButtons = document.querySelectorAll('.add-exercise-button');
+
+    addExerciseButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const form = this.nextElementSibling; 
+            if (form) {
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    });
+});
+

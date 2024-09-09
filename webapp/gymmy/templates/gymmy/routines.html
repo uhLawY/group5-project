@@ -39,7 +39,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="routine_id" value="{{ routine.id }}">
                     <div>
-                        <label for="workout">Select Existing Workout:</label>
+                        <label for="workout">Add to Existing Workout:</label>
                         <select name="workout">
                             <option value="">-- Select a workout --</option>
                             {% for workout in user.workouts.all %}
@@ -52,7 +52,7 @@
 
                     <div>
                         <label>Or Create New Workout:</label>
-                        <input type="text" name="new_workout_name" placeholder="New workout name">
+                        <input class="input-workout-name" type="text" name="new_workout_name" placeholder="New workout name">
                     </div>
 
                     <div>
@@ -65,7 +65,7 @@
                         <input type="number" name="sets" min="1" required>
                     </div>
 
-                    <button type="submit">Add to Workout</button>
+                    <button class="add-btn" type="submit">Add to Workout</button>
                 </form>
                 {% endif %}
             </div>

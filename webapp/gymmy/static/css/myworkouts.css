@@ -1,7 +1,14 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
+    padding-top: 100px;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 100%, rgba(0,212,255,1) 100%);
     color: #333;
@@ -99,6 +106,136 @@ h2 {
 
 .btn-danger:hover {
     background-color: #c82333;
+}
+
+
+
+/* Style for new workout form */
+#new-workout-form {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+#new-workout-form h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #007bff;
+}
+
+#new-workout-form form {
+    margin-top: 10px;
+}
+
+#new-workout-form div {
+    margin-bottom: 10px;
+}
+
+#new-workout-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#new-workout-form input[type="text"] {
+    width: 100%;
+    font-weight: bold;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#new-workout-form button {
+    background-color: #17a2b8;
+    border: none;
+    color: #fff;
+    padding: 7px 13px;
+    border-radius: 17px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#new-workout-form button:hover {
+    background-color: #138496;
+}
+
+/* Style for add exercise form */
+.add-exercise-form {
+    transition: all 0.1s ease-in-out;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.add-exercise-form h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #007bff;
+}
+
+.add-exercise-form form {
+    margin-top: 10px;
+}
+
+.add-exercise-form div {
+    margin-bottom: 10px;
+}
+
+.add-exercise-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add-exercise-form select,
+.add-exercise-form input[type="number"] {
+    width: 100%;
+    font-weight: bold;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-exercise-form button {
+    background-color: #17a2b8;
+    border: none;
+    color: #fff;
+    padding: 7px 13px;
+    border-radius: 17px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-exercise-form button:hover {
+    background-color: #138496;
+}
+
+.btn-create {
+    margin-bottom: 20px;
+    border-radius: 20px;
+    width: 200px;
+    height: 40px;
+    background: #fdbd29;
+    border: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-create:hover {
+    background: #e19f06;
+}
+
+.btn-create:active {
+    transform: scale(0.9);
 }
 
 
