@@ -103,7 +103,38 @@ def my_workouts(request, username=None):
         user = request.user
 
     workouts = Workout.objects.filter(user=user)
-    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user})
+    routines = Routines.objects.all()
+
+    if request.method == 'POST':
+        if 'create_workout' in request.POST:
+            
+            new_workout_name = request.POST.get('new_workout_name', '').strip()
+            if new_workout_name:
+                workout = Workout.objects.create(user=user, name=new_workout_name)
+                messages.success(request, f'New workout "{workout.name}" created successfully!')
+            else:
+                messages.error(request, 'Please enter a workout name.')
+
+        elif 'add_exercise' in request.POST:
+            
+            workout_id = request.POST.get('workout_id')
+            routine_id = request.POST.get('routine')
+            reps = int(request.POST.get('reps', 1))
+            sets = int(request.POST.get('sets', 1))
+
+            workout = get_object_or_404(Workout, id=workout_id, user=user)
+            routine = get_object_or_404(Routines, id=routine_id)
+
+            WorkoutExercise.objects.create(
+                workout=workout,
+                routine=routine,
+                reps=reps,
+                sets=sets
+            )
+            messages.success(request, 'Exercise added successfully!')
+
+
+    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines})
 
 
 def routines(request):
@@ -262,3 +293,6 @@ def add_comment(request, post_id):
 def exercise_details(request, routine_id):
     routine = get_object_or_404(Routines, id=routine_id)
     return render(request, 'gymmy/exercise_details.html', {'routine': routine})
+
+
+

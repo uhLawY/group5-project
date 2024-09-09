@@ -17,6 +17,25 @@
     {% endfor %}
     {% endif %}
     <h2>{{ profile_user.username }}'s Workouts</h2>
+
+     <!-- Button to show new workout form -->
+     <button id="create-workout-button" class="btn-create ">Create New Workout</button>
+
+     <!-- New Workout Form -->
+    <div id="new-workout-form" style="display: none;">
+        <h3>Create New Workout</h3>
+        <form method="POST" action="{% url 'my_workouts' %}">
+            {% csrf_token %}
+            <input type="hidden" name="create_workout" value="true">
+            <div>
+                <label for="new_workout_name">Workout Name:</label>
+                <input type="text" id="new_workout_name" name="new_workout_name" required>
+            </div>
+            <button type="submit">Create Workout</button>
+        </form>
+    </div>
+
+
     {% if workouts %}
         {% for workout in workouts %}
             <div class="workout">
@@ -38,6 +57,37 @@
                         <li>No exercises added yet.</li>
                     {% endfor %}
                 </ul>
+
+                <!-- Button to show add exercise form -->
+                <button class="add-exercise-button btn btn-info" data-workout-id="{{ workout.id }}">Add Exercise</button>
+
+                <!-- Add Exercise Form -->
+                <div class="add-exercise-form" style="display: none;">
+                    <form method="POST" action="{% url 'my_workouts' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_exercise" value="true">
+                        <input type="hidden" name="workout_id" value="{{ workout.id }}">
+                        <div>
+                            <label for="routine">Select Exercise:</label>
+                            <select name="routine" id="routine">
+                                {% for routine in routines %}
+                                    <option value="{{ routine.id }}">{{ routine.routine }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="reps">Reps:</label>
+                            <input type="number" name="reps" min="1" required>
+                        </div>
+                        <div>
+                            <label for="sets">Sets:</label>
+                            <input type="number" name="sets" min="1" required>
+                        </div>
+                        <button type="submit">Add Exercise</button>
+                    </form>
+                </div>
+
+                
                 <form method="POST" action="{% url 'delete_workout' workout.id %}" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this workout?');">Delete Workout</button>
