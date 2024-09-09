@@ -18,10 +18,10 @@
     {% endif %}
     <h2>{{ profile_user.username }}'s Workouts</h2>
 
-     <!-- Button to show new workout form -->
+     
      <button id="create-workout-button" class="btn-create ">Create New Workout</button>
 
-     <!-- New Workout Form -->
+     
     <div id="new-workout-form" style="display: none;">
         <h3>Create New Workout</h3>
         <form method="POST" action="{% url 'my_workouts' %}">
@@ -58,10 +58,10 @@
                     {% endfor %}
                 </ul>
 
-                <!-- Button to show add exercise form -->
+                
                 <button class="add-exercise-button btn btn-info" data-workout-id="{{ workout.id }}">Add Exercise</button>
 
-                <!-- Add Exercise Form -->
+                
                 <div class="add-exercise-form" style="display: none;">
                     <form method="POST" action="{% url 'my_workouts' %}">
                         {% csrf_token %}
