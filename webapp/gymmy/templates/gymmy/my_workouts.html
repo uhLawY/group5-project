@@ -7,9 +7,9 @@
 
 <div class="profile-container">
     {% if messages %}
-    {% for message in messages%}
+    {% for message in messages %}
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{message}}
+        {{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,10 +18,8 @@
     {% endif %}
     <h2>{{ profile_user.username }}'s Workouts</h2>
 
-     
-     <button id="create-workout-button" class="btn-create ">Create New Workout</button>
+    <button id="create-workout-button" class="btn-create">Create New Workout</button>
 
-     
     <div id="new-workout-form" style="display: none;">
         <h3>Create New Workout</h3>
         <form method="POST" action="{% url 'my_workouts' %}">
@@ -35,7 +33,6 @@
         </form>
     </div>
 
-
     {% if workouts %}
         {% for workout in workouts %}
             <div class="workout">
@@ -45,23 +42,23 @@
                         <li>
                             <strong>{{ exercise.routine.routine }}</strong> - 
                             {{ exercise.sets }} sets of {{ exercise.reps }} reps
-                            
+
                             <a href="{% url 'exercise_details' exercise.routine.id %}" class="btn btn-info">Exercise Details</a>
-                            <form method="POST" action="{% url 'delete_exercise' exercise.id %}" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this workout?');">Delete Exercise</button>
-                                
-                            </form>
+
+                            {% if profile_user == request.user %}
+                                <form method="POST" action="{% url 'delete_exercise' exercise.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this exercise?');">Delete Exercise</button>
+                                </form>
+                            {% endif %}
                         </li>
                     {% empty %}
                         <li>No exercises added yet.</li>
                     {% endfor %}
                 </ul>
 
-                
                 <button class="add-exercise-button btn btn-info" data-workout-id="{{ workout.id }}">Add Exercise</button>
 
-                
                 <div class="add-exercise-form" style="display: none;">
                     <form method="POST" action="{% url 'my_workouts' %}">
                         {% csrf_token %}
@@ -87,10 +84,17 @@
                     </form>
                 </div>
 
-                
-                <form method="POST" action="{% url 'delete_workout' workout.id %}" style="display:inline;">
+                {% if profile_user == request.user %}
+                    <form method="POST" action="{% url 'delete_workout' workout.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this workout?');">Delete Workout</button>
+                    </form>
+                {% endif %}
+
+                <!-- Copy Workout Button -->
+                <form method="POST" action="{% url 'copy_workout' workout.id %}" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this workout?');">Delete Workout</button>
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to copy this workout?');">Copy Workout</button>
                 </form>
             </div>
         {% endfor %}
@@ -98,6 +102,7 @@
         <p>You have no workouts yet. Start creating your workouts!</p>
     {% endif %}
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

@@ -170,7 +170,6 @@ def my_workouts(request, username=None):
 
     workouts = Workout.objects.filter(user=user)
     routines = Routines.objects.all()
-    popular_exercises = Routines.objects.annotate(Count('workoutexercise')).order_by('-workoutexercise__count')[:10]
 
     if request.method == 'POST':
         if 'create_workout' in request.POST:
@@ -201,8 +200,7 @@ def my_workouts(request, username=None):
             messages.success(request, 'Exercise added successfully!')
 
 
-    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines, 'popular_exercises': popular_exercises,})
-
+    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines})
 
 def routines(request):
     query = request.GET.get('input-box')
@@ -356,6 +354,12 @@ def add_comment(request, post_id):
             comment.post = post
             comment.author = request.user
             comment.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'author': comment.author.username,
+                    'content': comment.content,
+                    'date_posted': comment.date_posted.strftime('%Y-%m-%d %H:%M:%S'),  # Format as needed
+                })
             return redirect('flexcam')
     else:
         form = CommentForm()
@@ -368,4 +372,24 @@ def exercise_details(request, routine_id):
     return render(request, 'gymmy/exercise_details.html', {'routine': routine})
 
 
+@login_required
+def copy_workout(request, workout_id):
+    original_workout = get_object_or_404(Workout, id=workout_id)
 
+    # Create a copy of the workout for the current user
+    new_workout = Workout.objects.create(
+        user=request.user,
+        name=f'Copy of {original_workout.name}'
+    )
+
+    # Copy exercises associated with the original workout
+    for exercise in original_workout.exercises.all():
+        WorkoutExercise.objects.create(
+            workout=new_workout,
+            routine=exercise.routine,
+            reps=exercise.reps,
+            sets=exercise.sets
+        )
+
+    messages.success(request, f'Workout "{original_workout.name}" has been copied successfully!')
+    return redirect('my_workouts')
