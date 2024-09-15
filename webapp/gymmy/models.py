@@ -50,6 +50,7 @@ class Routines(models.Model):
     favorites = models.ManyToManyField(User, related_name='favourite_routines', blank=True)
     instructions = models.TextField(blank=True, null=True)  
     benefits = models.TextField(blank=True, null=True)  
+    popularity_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.routine
@@ -112,6 +113,12 @@ class WorkoutExercise(models.Model):
     routine = models.ForeignKey(Routines, on_delete=models.CASCADE)
     reps = models.PositiveIntegerField(default=1)
     sets = models.PositiveIntegerField(default=1)
+
+    def save(self, *args, **kwargs):
+        if not self.pk: 
+            self.routine.popularity_count += 1  
+            self.routine.save()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.routine.routine} - {self.reps} reps, {self.sets} sets'

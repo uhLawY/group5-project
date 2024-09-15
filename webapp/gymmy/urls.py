@@ -30,6 +30,7 @@ urlpatterns = [
     path('my_workouts/<str:username>/', views.my_workouts, name='my_workouts_user'),
     path('progress/', views.progress_tracker, name='progress'),
     path('progress/reset/<int:progress_id>/', views.reset_progress, name='reset_progress'),
+    path('top-exercises/', views.top_exercises, name='top_exercises'),
     
     ]
 

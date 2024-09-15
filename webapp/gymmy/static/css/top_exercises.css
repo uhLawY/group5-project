@@ -1,0 +1,93 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  background-color: #121212; 
+  color: #E0E0E0; 
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+.top-exercises-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #1E1E1E;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
+}
+
+
+.top-exercises-container h2 {
+  text-align: center;
+  color: #FF4081; 
+  font-size: 2em;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+
+.top-exercises-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.top-exercises-container ul li {
+  background-color: #282828; 
+  color: #FFFFFF;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+
+.top-exercises-container ul li:hover {
+  background-color: #333333;
+}
+
+
+.top-exercises-container ul li span.exercise-name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+
+.top-exercises-container ul li span.exercise-count {
+  background-color: #FF4081; 
+  color: #121212; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+
+@media (max-width: 600px) {
+  .top-exercises-container {
+      padding: 15px;
+  }
+
+  .top-exercises-container h2 {
+      font-size: 1.5em;
+  }
+
+  .top-exercises-container ul li {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .top-exercises-container ul li span.exercise-count {
+      margin-top: 10px;
+  }
+}
