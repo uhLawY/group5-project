@@ -135,3 +135,10 @@ class WorkoutProgress(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.workout.name} on {self.date}'
+
+
+class Report(models.Model):
+    post = models.ForeignKey(FlexcamPost, on_delete=models.CASCADE)
+    reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
-from .models import Profile, Routines , FlexcamPost, WorkoutExercise, Workout, WorkoutProgress
+from .models import Profile, Routines , FlexcamPost, WorkoutExercise, Workout, WorkoutProgress ,Report
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.http import JsonResponse
@@ -398,3 +398,32 @@ def copy_workout(request, workout_id):
 
     messages.success(request, f'Workout "{original_workout.name}" has been copied successfully!')
     return redirect('my_workouts')
+
+
+from django.views.decorators.http import require_POST
+from django.conf import settings
+from django.core.mail import send_mail
+        
+        
+@require_POST
+@login_required
+def report_flexcam_post(request, post_id):
+    post = get_object_or_404(FlexcamPost, id=post_id)
+    reason = request.POST.get('reason')
+
+    if not reason:
+        return JsonResponse({'message': 'Reason is required.'}, status=400)
+
+    try:
+        # Create the report
+        Report.objects.create(post=post, reported_by=request.user, reason=reason)
+
+        # Notify admin (You can trigger email or a notification here)
+        admin_email = 'jflfeng94877@gmail.com'
+        message = f"New report by {request.user.username} for post '{post.title}'\nReason: {reason}"
+        send_mail('New Report Submitted', message, 'noreply@example.com', [admin_email])
+
+        return JsonResponse({'status': 'success'})
+    except Exception as e:
+        print(f'Error sending email: {str(e)}')  # Log the error
+        return JsonResponse({'message': 'There was an error submitting your report.'}, status=500)

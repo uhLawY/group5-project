@@ -35,9 +35,12 @@
                         {% endif %}
                     </button>
                     <span class="like-count">{{ post.likes.count }}</span>
+
+                    <!-- Report button -->
+                    <button class="report-btn" data-post-id="{{ post.id }}">Report</button>
                 </div>
             </div>
-            
+
             <div class="post-comments" id="comments-{{ post.id }}">
                 {% for comment in post.comments.all %}
                 <div class="comment">
@@ -54,6 +57,28 @@
                 </form>
             </div>
         </div>
+
+        <!-- Modal for report -->
+        <div class="modal report-modal" id="report-modal-{{ post.id }}" style="display:none;">
+            <div class="modal-content">
+                <h3>Report Post</h3>
+                <form class="report-form" data-post-id="{{ post.id }}">
+                    <label for="reason">Select reason:</label>
+                    <select name="reason" required>
+                        <option value="Sexual Harrasment">Sexual Harrasment</option>
+                        <option value="Violation">Violation</option>
+                        <option value="It's Spam">It's Spam</option>
+                        <option value="Nudity">Nudity</option>
+                        <option value="Drugs">Drugs</option>
+                        <option value="I just don't like it">I just don't like it</option>
+                        <option value="Scam">Scam</option>
+                    </select>
+                    <button type="submit">Submit</button>
+                    <button type="button" class="close-modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+
         {% endfor %}
     </div>
     
@@ -69,9 +94,11 @@
         {% endif %}
     </div>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function(){
+        // Handle like button functionality
         $('.like-btn').click(function(){
             var postId = $(this).data('post-id');
             var likeBtn = $(this);
@@ -94,6 +121,42 @@
             });
         });
 
+         // Handle report button click to show modal
+         $('.report-btn').click(function() {
+            var postId = $(this).data('post-id');
+            $('#report-modal-' + postId).show();  // Show the modal
+        });
+
+        // Handle close modal button
+        $('.close-modal').click(function() {
+            $(this).closest('.modal').hide();  // Hide the modal
+        });
+
+        // Handle report form submission
+        $('.report-form').submit(function(e) {
+            e.preventDefault(); // Prevent normal form submission
+
+            var postId = $(this).data('post-id');
+            var reason = $(this).find('select[name="reason"]').val();
+
+            $.ajax({
+                url: "{% url 'report_flexcam_post' 0 %}".replace(0, postId),
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'reason': reason
+                },
+                success: function(response) {
+                    alert('Report submitted successfully.');
+                    $('.modal').hide();  // Close modal after submission
+                },
+                error: function() {
+                    alert('There was an error submitting your report.');
+                }
+            });
+        });
+        
+        // Handle comment form submission
         $('.comment-form').submit(function(e){
             e.preventDefault(); // Prevent the form from submitting normally
 
@@ -123,7 +186,6 @@
         });
     });
 </script>
-
 
 <script src="{% static 'js/base.js' %}"></script>
 
