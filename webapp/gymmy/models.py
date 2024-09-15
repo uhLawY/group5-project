@@ -110,8 +110,20 @@ class Workout(models.Model):
 class WorkoutExercise(models.Model):
     workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='exercises')
     routine = models.ForeignKey(Routines, on_delete=models.CASCADE)
-    reps = models.PositiveIntegerField(default=1)  
-    sets = models.PositiveIntegerField(default=1)  
+    reps = models.PositiveIntegerField(default=1)
+    sets = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return f'{self.routine.routine} - {self.reps} reps, {self.sets} sets'
+
+class WorkoutProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='workout_progress')
+    workout = models.ForeignKey('Workout', on_delete=models.CASCADE, related_name='progress')
+    exercise = models.ForeignKey('WorkoutExercise', on_delete=models.CASCADE, related_name='exercise_progress', null=True, blank=True)
+    date = models.DateField(default=timezone.now)
+    total_reps = models.PositiveIntegerField(default=0)
+    total_sets = models.PositiveIntegerField(default=0)
+    total_weight = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.workout.name} on {self.date}'

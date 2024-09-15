@@ -6,9 +6,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
-from .models import Profile, Routines , FlexcamPost, WorkoutExercise, Workout
+from .models import Profile, Routines , FlexcamPost, WorkoutExercise, Workout, WorkoutProgress
+from django.utils import timezone
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from decimal import Decimal
 
 # Create your views here.
 
@@ -90,9 +92,72 @@ def see_profile(request, username):
     if user == request.user:
         return redirect('profile_front')
     else:
-        # Fetch the workouts of the user whose profile is being viewed
         workouts = Workout.objects.filter(user=user)
         return render(request, 'gymmy/see_profile.html', {'user': user, 'workouts': workouts})
+    
+@login_required
+def progress_tracker(request):
+    # Fetch workouts for the current user
+    workouts = Workout.objects.filter(user=request.user)
+    routines = []
+
+    # Fetch selected workout and its exercises
+    selected_workout_id = request.POST.get('workout_id')
+    selected_workout = None
+    if selected_workout_id:
+        selected_workout = get_object_or_404(Workout, id=selected_workout_id, user=request.user)
+        routines = selected_workout.exercises.all()  # Fetch exercises associated with the selected workout
+
+    # Handle form submission for updating progress
+    if request.method == 'POST' and 'update_progress' in request.POST:
+        workout_id = request.POST.get('workout_id')
+        exercise_id = request.POST.get('exercise_id')
+        reps = int(request.POST.get('reps', 0))
+        sets = int(request.POST.get('sets', 0))
+        weight = Decimal(request.POST.get('weight', 0.0))
+
+        # Fetch the workout and exercise without modifying them
+        workout = get_object_or_404(Workout, id=workout_id, user=request.user)
+        exercise = get_object_or_404(WorkoutExercise, id=exercise_id, workout=workout)
+
+        # Update or create progress for the workout exercise
+        progress, created = WorkoutProgress.objects.get_or_create(
+            user=request.user,
+            workout=workout,
+            exercise=exercise,
+            date=timezone.now().date(),
+            defaults={
+                'total_reps': reps * sets,
+                'total_sets': sets,
+                'total_weight': weight * reps * sets
+            }
+        )
+
+        if not created:
+            # Update progress fields only, without modifying the workout or its exercises
+            progress.total_reps += reps * sets
+            progress.total_sets += sets
+            progress.total_weight += weight * Decimal(reps * sets)
+            progress.save()
+
+        messages.success(request, 'Workout progress updated successfully!')
+
+    # Fetch all progress entries for display
+    progresses = WorkoutProgress.objects.filter(user=request.user).order_by('-date')
+    
+    return render(request, 'gymmy/progress.html', {
+        'progresses': progresses,
+        'workouts': workouts,
+        'routines': routines,
+        'selected_workout_id': selected_workout_id,
+        'selected_workout': selected_workout
+    })
+
+def reset_progress(request, progress_id):
+    progress = get_object_or_404(WorkoutProgress, id=progress_id, user=request.user)
+    progress.delete()
+    messages.success(request, f'Progress for "{progress.exercise.routine.routine if progress.exercise else progress.workout.name}" has been reset successfully!')
+    return redirect('progress')
 
 def my_workouts(request, username=None):
     if username:

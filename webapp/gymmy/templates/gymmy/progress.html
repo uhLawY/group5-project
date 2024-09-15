@@ -1,0 +1,99 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+
+{% block title %}Gymmy | Progress Tracking{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/progress.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Update Your Workout Progress</h2>
+
+    <!-- Form for selecting a workout -->
+    <form method="POST">
+        {% csrf_token %}
+        <label for="workout">Select Workout:</label>
+        <select name="workout_id" required onchange="this.form.submit()">
+            <option value="">Select a Workout</option>
+            {% for workout in workouts %}
+                <option value="{{ workout.id }}" {% if workout.id|stringformat:"s" == selected_workout_id %}selected{% endif %}>
+                    {{ workout.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <!-- Form for updating progress with exercise selection -->
+    {% if selected_workout %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
+
+        <label for="exercise">Select Exercise:</label>
+        <select name="exercise_id" required>
+            <option value="">Select an Exercise</option>
+            {% for exercise in routines %}
+                <option value="{{ exercise.id }}">{{ exercise.routine.routine }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="reps">Reps Completed:</label>
+        <input type="number" name="reps" min="1" required>
+
+        <label for="sets">Sets Completed:</label>
+        <input type="number" name="sets" min="1" required>
+
+        <label for="weight">Weight Used (kg):</label>
+        <input type="number" step="0.01" name="weight" min="0" required>
+
+        <button type="submit" name="update_progress">Update Progress</button>
+    </form>
+    {% endif %}
+
+    <!-- Displaying workout progress -->
+    <h3>Your Progress</h3>
+    {% if progresses %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Workout</th>
+                <th>Exercise</th>
+                <th>Total Reps</th>
+                <th>Total Sets</th>
+                <th>Total Weight (kg)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for progress in progresses %}
+            <tr>
+                <td>{{ progress.date }}</td>
+                <td>{{ progress.workout.name }}</td>
+                <td>
+                    {% if progress.exercise %}
+                        {{ progress.exercise.routine.routine }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ progress.total_reps }}</td>
+                <td>{{ progress.total_sets }}</td>
+                <td>{{ progress.total_weight }}</td>
+                <td>
+                    <!-- Reset button for each specific progress entry -->
+                    <form action="{% url 'reset_progress' progress.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-reset">Reset Progress</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No progress recorded yet. Start by updating your progress for a workout.</p>
+    {% endif %}
+</div>
+{% endblock %}

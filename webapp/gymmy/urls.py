@@ -13,6 +13,7 @@ urlpatterns = [
     path('signup/',views.signup_user, name="signup"),
     path('profile/',views.profile_user, name="profile"),
     path('routines/',views.routines, name="routines"),
+    path('progress/',views.progress_tracker, name="progress"),
     path('profile_front/', views.profile_front, name="profile_front"),
     path('routines/<int:routine_id>/favourite/', views.add_to_favourite, name='add_to_favourite'),
     path('my-favourites/', views.favourite_routines, name='favourite_routines'),
@@ -27,7 +28,8 @@ urlpatterns = [
     path('exercise/<int:routine_id>/', views.exercise_details, name='exercise_details'),
     path('my_workouts/', views.my_workouts, name='my_workouts'),
     path('my_workouts/<str:username>/', views.my_workouts, name='my_workouts_user'),
-    
+    path('progress/', views.progress_tracker, name='progress'),
+    path('progress/reset/<int:progress_id>/', views.reset_progress, name='reset_progress'),
     
     ]
 
