@@ -1,0 +1,18 @@
+{% extends 'gymmy/base.html' %}
+{% load static %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/top_exercises.css' %}">{% endblock %}
+{% block title %}Gymmy | Top Exercises{% endblock %}
+
+{% block content %}
+<div class="top-exercises-container">
+  <h2>Top 10 Most Popular Exercises</h2>
+  <ul>
+      {% for routine in top_routines %}
+      <li>
+          <span class="exercise-name">{{ routine.routine }}</span>
+          <span class="exercise-count">{{ routine.popularity_count }} times</span>
+      </li>
+      {% endfor %}
+  </ul>
+</div>
+{% endblock %}

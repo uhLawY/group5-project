@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from decimal import Decimal
+from django.db.models import Count
 
 # Create your views here.
 
@@ -169,6 +170,7 @@ def my_workouts(request, username=None):
 
     workouts = Workout.objects.filter(user=user)
     routines = Routines.objects.all()
+    popular_exercises = Routines.objects.annotate(Count('workoutexercise')).order_by('-workoutexercise__count')[:10]
 
     if request.method == 'POST':
         if 'create_workout' in request.POST:
@@ -199,7 +201,7 @@ def my_workouts(request, username=None):
             messages.success(request, 'Exercise added successfully!')
 
 
-    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines})
+    return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines, 'popular_exercises': popular_exercises,})
 
 
 def routines(request):
@@ -268,6 +270,12 @@ def delete_exercise(request, exercise_id):
     else:
         messages.error(request, 'Invalid request. Please try again.')
         return redirect('my_workouts')
+    
+    
+def top_exercises(request):
+    top_routines = Routines.objects.all().order_by('-popularity_count')[:10] 
+    return render(request, 'gymmy/top_exercises.html', {'top_routines': top_routines})
+
 
 @login_required
 def add_to_favourite(request, routine_id):
