@@ -131,6 +131,7 @@ class WorkoutProgress(models.Model):
     total_reps = models.PositiveIntegerField(default=0)
     total_sets = models.PositiveIntegerField(default=0)
     total_weight = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    single_weight = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f'{self.user.username} - {self.workout.name} on {self.date}'

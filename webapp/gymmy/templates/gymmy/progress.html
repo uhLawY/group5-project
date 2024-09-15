@@ -9,8 +9,16 @@
 {% block content %}
 <div class="container">
     <h2>Update Your Workout Progress</h2>
-
-    <!-- Form for selecting a workout -->
+    {% if messages %}
+    {% for message in messages%}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <label for="workout">Select Workout:</label>
@@ -23,20 +31,55 @@
             {% endfor %}
         </select>
     </form>
-
-    <!-- Form for updating progress with exercise selection -->
+    
     {% if selected_workout %}
     <form method="POST">
         {% csrf_token %}
         <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
 
         <label for="exercise">Select Exercise:</label>
-        <select name="exercise_id" required>
+        <select name="exercise_id" required onchange="this.form.submit()">
             <option value="">Select an Exercise</option>
             {% for exercise in routines %}
-                <option value="{{ exercise.id }}">{{ exercise.routine.routine }}</option>
+                <option value="{{ exercise.id }}" {% if exercise.id|stringformat:"s" == selected_exercise_id %}selected{% endif %}>
+                    {{ exercise.routine.routine }}
+                </option>
             {% endfor %}
         </select>
+    </form>
+    {% endif %}
+
+    {% if exercise_progresses %}
+    <h4>Previous Progress for Selected Exercise</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Total Reps</th>
+                <th>Total Sets</th>
+                <th>Single Weight (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for progress in exercise_progresses %}
+            <tr>
+                <td>{{ progress.date }}</td>
+                <td>{{ progress.total_reps }}</td>
+                <td>{{ progress.total_sets }}</td>
+                <td>{{ progress.single_weight }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No previous progress for the selected exercise.</p>
+    {% endif %}
+
+    {% if selected_exercise_id %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="workout_id" value="{{ selected_workout.id }}">
+        <input type="hidden" name="exercise_id" value="{{ selected_exercise_id }}">
 
         <label for="reps">Reps Completed:</label>
         <input type="number" name="reps" min="1" required>
@@ -51,15 +94,13 @@
     </form>
     {% endif %}
 
-    <!-- Displaying workout progress -->
-    <h3>Your Progress</h3>
+    <h3>Your Overall Progress</h3>
     {% if progresses %}
     <table>
         <thead>
             <tr>
                 <th>Date</th>
                 <th>Workout</th>
-                <th>Exercise</th>
                 <th>Total Reps</th>
                 <th>Total Sets</th>
                 <th>Total Weight (kg)</th>
@@ -71,18 +112,10 @@
             <tr>
                 <td>{{ progress.date }}</td>
                 <td>{{ progress.workout.name }}</td>
-                <td>
-                    {% if progress.exercise %}
-                        {{ progress.exercise.routine.routine }}
-                    {% else %}
-                        N/A
-                    {% endif %}
-                </td>
                 <td>{{ progress.total_reps }}</td>
                 <td>{{ progress.total_sets }}</td>
                 <td>{{ progress.total_weight }}</td>
                 <td>
-                    <!-- Reset button for each specific progress entry -->
                     <form action="{% url 'reset_progress' progress.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn-reset">Reset Progress</button>
@@ -95,5 +128,7 @@
     {% else %}
     <p>No progress recorded yet. Start by updating your progress for a workout.</p>
     {% endif %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </div>
 {% endblock %}
