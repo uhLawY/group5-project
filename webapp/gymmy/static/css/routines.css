@@ -200,3 +200,46 @@ button:active {
     background-color: #0d6efd;
     transform: scale(0.95); 
 }
+
+
+/* Filter Row Styles */
+.row-filter {
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center vertically */
+    justify-content: space-between; /* Space between label and dropdown */
+    margin-top: 20px; /* Space above the filter row */
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 5px; /* Slight padding */
+}
+
+/* Filter Label */
+.row-filter label {
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color for visibility */
+    margin-right: 10px; /* Space between label and dropdown */
+    font-size: 16px; /* Slightly increased font size */
+}
+
+/* Filter Dropdown */
+.row-filter select {
+    flex: 1; /* Make dropdown expand */
+    padding: 4px; /* Reduced padding for a smaller height */
+    border: 2px solid #a34747; /* Border with color */
+    border-radius: 5px; /* Rounded corners */
+    background: #f9f9f9; /* Light background */
+    font-size: 13px; /* Slightly smaller font size */
+    transition: border-color 0.3s; /* Smooth border transition */
+    width: 90px; /* Further shortened width */
+}
+
+/* Hover effect for dropdown */
+.row-filter select:hover {
+    border-color: #d48904; /* Change border color on hover */
+}
+
+/* Active effect for dropdown */
+.row-filter select:focus {
+    outline: none; /* Remove default outline */
+    border-color: #0095f6; /* Change border color when focused */
+}
