@@ -27,9 +27,14 @@
         {% endif %}
         <li><a href="{% url 'flexcam' %}">Flexcam</a></li>
         <li><a href="{% url 'routines' %}">Routines</a></li>
-        <li><a href="{% url 'progress' %}">Progress</a></li>
         <li><a href="{% url 'top_exercises' %}">Popular</a></li>
-        <li><a href="{% url 'profile_front' %}" class="signup-link">Profile</a></li>
+        <li class="dropdown">
+            <a href="{% url 'profile_front' %}" class="profile-link signup-link">Profile</a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'progress' %}">Progress</a></li>
+                <li><a href="{% url 'my_workouts' %}">My Workouts</a></li>
+            </ul>
+        </li>
         <li><a href="{% url 'logout' %}" class="signup-link">Logout</a></li>
     {% else %}
         <li><a href="{% url 'login' %}">Flexcam</a></li>
