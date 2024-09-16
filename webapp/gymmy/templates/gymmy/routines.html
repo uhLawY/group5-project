@@ -1,7 +1,11 @@
 {% extends 'gymmy/base.html' %}
 {% load static %}
-{% block css %}<link rel="stylesheet" href="{% static 'css/routines.css' %}">{% endblock %}
-{% block title %}Gymmy | Routines{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/routines.css' %}">
+{% endblock %}
+{% block title %}
+Gymmy | Routines
+{% endblock %}
 
 {% block content %}
 <div class="search-box">
@@ -10,69 +14,83 @@
             <input type="text" id="input-box" name="input-box" placeholder="Search here">
             <button type="submit">Search</button>
         </div>
+        <div class="row-filter">
+            <label for="category">Filter by Category:</label>
+            <select name="category" id="category" onchange="this.form.submit()">
+                <option value="">-- Select a category --</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}"{% if selected_category == category.id %} selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
     </form>
 </div>
+
 {% if messages %}
-{% for message in messages%}
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{message}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-{% endfor %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
 {% endif %}
 
 <div class="wrapper">
-
     {% for routine in routines %}
-    <div class="container">
-        <div class="card">
-            <div class="front"><img src="{{ routine.image.url }}" alt="Routine Image"></div>
-            <div class="back">
-                <h2>{{ routine.routine }}</h2>
+        <div class="container">
+            <div class="card">
+                <div class="front">
+                    <img src="{{ routine.image.url }}" alt="Routine Image">
+                </div>
+                <div class="back">
+                    <h2>{{ routine.routine }}</h2>
 
-                <a href="{% url 'exercise_details' routine.id %}" class="details-btn">Exercise Details</a>
+                    <a href="{% url 'exercise_details' routine.id %}" class="details-btn">Exercise Details</a>
 
-                {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'routines' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="routine_id" value="{{ routine.id }}">
-                    <div>
-                        <label for="workout">Add to Existing Workout:</label>
-                        <select name="workout">
-                            <option value="">-- Select a workout --</option>
-                            {% for workout in user.workouts.all %}
-                                <option value="{{ workout.id }}">{{ workout.name }}</option>
-                            {% empty %}
-                                <option value="">No workouts available</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'routines' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="routine_id" value="{{ routine.id }}">
+                        <div>
+                            <label for="workout">Add to Existing Workout:</label>
+                            <select name="workout">
+                                <option value="">-- Select a workout --</option>
+                                {% for workout in user.workouts.all %}
+                                    <option value="{{ workout.id }}">{{ workout.name }}</option>
+                                {% empty %}
+                                    <option value="">No workouts available</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
-                    <div>
-                        <label>Or Create New Workout:</label>
-                        <input class="input-workout-name" type="text" name="new_workout_name" placeholder="New workout name">
-                    </div>
+                        <div>
+                            <label>Or Create New Workout:</label>
+                            <input class="input-workout-name" type="text" name="new_workout_name" placeholder="New workout name">
+                        </div>
 
-                    <div>
-                        <label for="reps">Reps:</label>
-                        <input type="number" name="reps" min="1" required>
-                    </div>
+                        <div>
+                            <label for="reps">Reps:</label>
+                            <input type="number" name="reps" min="1" required>
+                        </div>
 
-                    <div>
-                        <label for="sets">Sets:</label>
-                        <input type="number" name="sets" min="1" required>
-                    </div>
+                        <div>
+                            <label for="sets">Sets:</label>
+                            <input type="number" name="sets" min="1" required>
+                        </div>
 
-                    <button class="add-btn" type="submit">Add to Workout</button>
-                </form>
-                {% endif %}
+                        <button class="add-btn" type="submit">Add to Workout</button>
+                    </form>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
     {% endfor %}
+</div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</div>
 {% endblock %}

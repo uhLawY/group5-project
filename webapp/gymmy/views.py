@@ -206,16 +206,23 @@ def my_workouts(request, username=None):
 
 
     return render(request, 'gymmy/my_workouts.html', {'workouts': workouts, 'profile_user': user, 'routines': routines})
-
+    
+from .models import Routines, Workout, WorkoutExercise, Category
 def routines(request):
+    # Get the selected category from the request
+    category_id = request.GET.get('category')
     query = request.GET.get('input-box')
-    if query:
+
+    # Filter routines based on the category and search query
+    if category_id:
+        routines = Routines.objects.filter(category_id=category_id)
+    elif query:
         routines = Routines.objects.filter(routine__icontains=query) | Routines.objects.filter(description__icontains=query)
     else:
         routines = Routines.objects.all()
     
+    # Handle POST request for adding workouts
     if request.method == 'POST':
-
         routine_id = request.POST.get('routine_id')
         routine = get_object_or_404(Routines, id=routine_id)
 
@@ -251,8 +258,18 @@ def routines(request):
                 messages.success(request, f'Exercise added to "{workout.name}" successfully!')
             except Workout.DoesNotExist:
                 messages.error(request, 'Selected workout does not exist. Please try again.')
+
+    # Get user's workouts for the dropdown
     workouts = Workout.objects.filter(user=request.user)
-    return render(request, 'gymmy/routines.html', {'routines': routines, 'workouts': workouts})
+    # Get all categories to pass to the template
+    categories = Category.objects.all()
+
+    return render(request, 'gymmy/routines.html', {
+        'routines': routines,
+        'workouts': workouts,
+        'categories': categories,  # Pass categories to the template
+        'selected_category': category_id,  # Pass selected category to the template
+    })
 
 def delete_workout(request, workout_id):
     workout = get_object_or_404(Workout, id=workout_id, user=request.user)
