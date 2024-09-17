@@ -55,7 +55,7 @@
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Total Reps</th>
+                <th>Reps/Set</th>
                 <th>Total Sets</th>
                 <th>Single Weight (kg)</th>
             </tr>
@@ -64,7 +64,7 @@
             {% for progress in exercise_progresses %}
             <tr>
                 <td>{{ progress.date }}</td>
-                <td>{{ progress.total_reps }}</td>
+                <td>{{ progress.single_reps }}</td>
                 <td>{{ progress.total_sets }}</td>
                 <td>{{ progress.single_weight }}</td>
             </tr>
@@ -111,12 +111,12 @@
             {% for progress in progresses %}
             <tr>
                 <td>{{ progress.date }}</td>
-                <td>{{ progress.workout.name }}</td>
+                <td>{{ progress.exercise__routine__routine }}</td>
                 <td>{{ progress.total_reps }}</td>
                 <td>{{ progress.total_sets }}</td>
                 <td>{{ progress.total_weight }}</td>
                 <td>
-                    <form action="{% url 'reset_progress' progress.id %}" method="POST" style="display:inline;">
+                    <form action="{% url 'reset_progress' date=progress.date exercise_routine=progress.exercise__routine__routine %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn-reset">Reset Progress</button>
                     </form>
