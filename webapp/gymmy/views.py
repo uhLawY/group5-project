@@ -11,7 +11,8 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from decimal import Decimal
-from django.db.models import Count
+from django.db.models import Sum
+from django.utils.dateparse import parse_date
 
 # Create your views here.
 
@@ -135,7 +136,8 @@ def progress_tracker(request):
                 'total_reps': reps * sets,
                 'total_sets': sets,
                 'total_weight': weight * reps * sets,
-                'single_weight': weight
+                'single_weight': weight,
+                'single_reps': reps,
             }
         )
 
@@ -147,7 +149,12 @@ def progress_tracker(request):
 
         messages.success(request, 'Workout progress updated successfully!')
 
-    progresses = WorkoutProgress.objects.filter(user=request.user).order_by('-date')
+    # progresses = WorkoutProgress.objects.filter(user=request.user).order_by('-date')
+    progresses = WorkoutProgress.objects.filter(user=request.user).values('date', 'exercise__routine__routine').annotate(
+        total_reps=Sum('total_reps'),
+        total_sets=Sum('total_sets'),
+        total_weight=Sum('total_weight')
+    ).order_by('-date')
 
     return render(request, 'gymmy/progress.html', {
         'progresses': progresses,
@@ -159,11 +166,27 @@ def progress_tracker(request):
         'selected_exercise_id': selected_exercise_id,
     })
 
-def reset_progress(request, progress_id):
-    progress = get_object_or_404(WorkoutProgress, id=progress_id, user=request.user)
-    progress.delete()
-    messages.success(request, f'Progress for "{progress.exercise.routine.routine if progress.exercise else progress.workout.name}" has been reset successfully!')
+@login_required
+def reset_progress(request, date, exercise_routine):
+    progress_date = parse_date(date)
+    if not progress_date:
+        messages.error(request, 'Invalid date format.')
+        return redirect('progress')
+
+    progresses = WorkoutProgress.objects.filter(
+        user=request.user,
+        date=progress_date,
+        exercise__routine__routine=exercise_routine
+    )
+
+    if progresses.exists():
+        progresses.delete()
+        messages.success(request, f'Progress for "{exercise_routine}" on {date} has been reset successfully!')
+    else:
+        messages.error(request, 'No matching progress found to reset.')
+
     return redirect('progress')
+
 
 def my_workouts(request, username=None):
     if username:

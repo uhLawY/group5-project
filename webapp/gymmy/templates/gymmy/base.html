@@ -26,12 +26,18 @@
         <li><a href="{% url 'new_flexcam_post' %}">Create Post</a></li>
         {% endif %}
         <li><a href="{% url 'flexcam' %}">Flexcam</a></li>
-        <li><a href="{% url 'routines' %}">Routines</a></li>
-        <li><a href="{% url 'top_exercises' %}">Popular</a></li>
+        <li class="dropdown">
+            <a href="{% url 'routines' %}" class="profile-link signup-link">Routines</a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'top_exercises' %}">Popular</a></li>
+                <li><a href="{% url 'my_workouts' %}">My Workouts</a></li>
+            </ul>
+        </li>
+        <li><a href="{% url 'progress' %}">Progress</a></li>
         <li class="dropdown">
             <a href="{% url 'profile_front' %}" class="profile-link signup-link">Profile</a>
             <ul class="dropdown-menu">
-                <li><a href="{% url 'progress' %}">Progress</a></li>
+                <li><a href="{% url 'profile' %}">Edit Profile</a></li>
                 <li><a href="{% url 'my_workouts' %}">My Workouts</a></li>
             </ul>
         </li>
