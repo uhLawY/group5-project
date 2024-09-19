@@ -187,6 +187,17 @@ def reset_progress(request, date, exercise_routine):
 
     return redirect('progress')
 
+@login_required
+def overallstats(request):
+    progresses = WorkoutProgress.objects.filter(user=request.user).values('date', 'exercise__routine__routine').annotate(
+        total_reps=Sum('total_reps'),
+        total_sets=Sum('total_sets'),
+        total_weight=Sum('total_weight')
+    ).order_by('-date')
+
+    return render(request, 'gymmy/overallstats.html', {
+        'progresses': progresses
+    })
 
 def my_workouts(request, username=None):
     if username:

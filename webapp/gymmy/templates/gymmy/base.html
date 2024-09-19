@@ -33,7 +33,12 @@
                 <li><a href="{% url 'my_workouts' %}">My Workouts</a></li>
             </ul>
         </li>
-        <li><a href="{% url 'progress' %}">Progress</a></li>
+        <li class="dropdown">
+            <a href="{% url 'progress' %}">Progress</a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'overallstats' %}">Overall Stats</a></li>
+            </ul>
+        </li>
         <li class="dropdown">
             <a href="{% url 'profile_front' %}" class="profile-link signup-link">Profile</a>
             <ul class="dropdown-menu">

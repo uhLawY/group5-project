@@ -33,6 +33,7 @@ urlpatterns = [
     path('top-exercises/', views.top_exercises, name='top_exercises'),
     path('copy_workout/<int:workout_id>/', copy_workout, name='copy_workout'),
     path('report-flexcam-post/<int:post_id>/', report_flexcam_post, name='report_flexcam_post'),
+    path('progress/overall/', views.overallstats, name='overallstats'),
     
     ]
 
