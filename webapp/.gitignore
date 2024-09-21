@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment (if any)
+venv/
+myenv/
+
+# Django stuff:
+db.sqlite3
+media/  # User-uploaded content (should be stored on the server, not in the repo)
+
+# Static files
+staticfiles/
+
+# Logs and local environment settings
+*.log
+.env
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# macOS-specific files
+.DS_Store
+
+# Python package files
+*.egg
+*.egg-info/
+dist/
+build/
