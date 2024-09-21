@@ -274,3 +274,32 @@ button:hover {
     align-items: center; 
     gap: 10px; 
 }
+
+.create-post-wrapper {
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.create-post-btn {
+    display: flex;
+    align-items: center;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.create-post-btn i.bx {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.create-post-btn:hover {
+    background-color: #007bbd; /* Darker shade on hover */
+}

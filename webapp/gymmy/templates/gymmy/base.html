@@ -23,8 +23,13 @@
             <li><a href="{% url 'about' %}">About</a></li>
     {% if user.is_authenticated%}
         {% if request.resolver_match.url_name == 'flexcam' %}
-        <li><a href="{% url 'new_flexcam_post' %}">Create Post</a></li>
+        <div class="create-post-wrapper">
+            <a href="{% url 'new_flexcam_post' %}" class="create-post-btn">
+                <i class='bx bx-plus'></i> New Post
+            </a>
+        </div>
         {% endif %}
+    
         <li><a href="{% url 'flexcam' %}">Flexcam</a></li>
         <li class="dropdown">
             <a href="{% url 'routines' %}" class="profile-link signup-link">Routines</a>
