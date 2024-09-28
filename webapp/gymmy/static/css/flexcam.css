@@ -274,3 +274,23 @@ button:hover {
     align-items: center; 
     gap: 10px; 
 }
+
+.create-post-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #0095f6;
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.create-post-btn:hover {
+    background-color: #007bbf;
+}

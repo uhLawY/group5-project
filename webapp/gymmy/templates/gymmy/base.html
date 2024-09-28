@@ -22,9 +22,6 @@
         <ul class="nav-links">
             <li><a href="{% url 'about' %}">About</a></li>
     {% if user.is_authenticated%}
-        {% if request.resolver_match.url_name == 'flexcam' %}
-        <li><a href="{% url 'new_flexcam_post' %}">Create Post</a></li>
-        {% endif %}
         <li><a href="{% url 'flexcam' %}">Flexcam</a></li>
         <li class="dropdown">
             <a href="{% url 'routines' %}" class="profile-link signup-link">Routines</a>
