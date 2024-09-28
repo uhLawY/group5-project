@@ -1,67 +1,86 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-  }
-  
-body{
-      height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: rgb(2,0,36);
-      background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 100%, rgba(0,212,255,1) 100%);
-      color: aliceblue;
-      display: flex;
-      justify-content: center;
-      align-items:center;
 }
-.wrapper{
+
+body {
+    height: 100vh;
+    font-family: 'Arial', Helvetica, sans-serif;
+    background: linear-gradient(135deg, rgba(2, 0, 36, 1) 0%, rgba(2, 2, 61, 1) 100%, rgba(0, 212, 255, 1) 100%);
+    color: aliceblue;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
+    padding: 20px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
-    gap: 120px;
-    margin-top: 50px;
+    gap: 80px;
+    margin-top: 20px;
 }
-.container{
-    height: 270px;
-    width: 280px;
-    perspective: 700px;
+
+.container {
+    height: 320px;
+    width: 250px;
+    perspective: 1000px;
 }
-.container:hover > .card{
+
+.container:hover > .card {
     cursor: pointer;
     transform: rotateY(180deg);
 }
-.card{
+
+.card {
     height: 100%;
     width: 100%;
     position: relative;
-    transition: transform 1500ms;
+    transition: transform 0.8s ease-in-out;
     transform-style: preserve-3d;
-    margin: 20px;
 }
 
-.card:hover{
-    cursor: pointer;
-}
-
-.front, .back{
+.front, .back {
     height: 100%;
     width: 100%;
-    border-radius: 5rem;
-    box-shadow: 0 0 5px 2px rgba(50, 50, 50, 0.25);
-    position:absolute;
+    border-radius: 15px;
+    box-shadow: 0 0 15px 4px rgba(50, 50, 50, 0.2);
+    position: absolute;
     backface-visibility: hidden;
 }
 
-img{
-    border-radius: 5rem;
+.front img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
-.back{
-    background-color: rgb(0, 44, 242);
+.back {
+    background-color: rgba(0, 44, 242, 0.8);
     transform: rotateY(180deg);
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+}
+
+.back h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.back h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.back p {
+    font-size: 1rem;
+    line-height: 1.4;
 }

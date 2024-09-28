@@ -31,3 +31,5 @@ staticfiles/
 *.egg-info/
 dist/
 build/
+
+website.html
