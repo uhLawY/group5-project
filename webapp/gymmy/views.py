@@ -332,38 +332,6 @@ def top_exercises(request):
 
 
 @login_required
-def add_to_favourite(request, routine_id):
-    routine = get_object_or_404(Routines, id=routine_id)
-    
-    if routine.favorites.filter(id=request.user.id).exists():
-        routine.favorites.remove(request.user)
-        added = False
-    else:
-        routine.favorites.add(request.user)
-        added = True
-    
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'added': added})
-    
-    return redirect('routines')
-
-
-
-@login_required
-def favourite_routines(request):
-    favourite_routines = Routines.objects.filter(favorites=request.user)
-    favourite_routine_ids = favourite_routines.values_list('id', flat=True)
-    
-    return render(request, 'gymmy/favourite_routines.html', {
-        'favourite_routines': favourite_routines,
-        'favourite_routine_ids': favourite_routine_ids,
-    })
-
-
-
-
-
-@login_required
 def flexcam(request):
     posts_list = FlexcamPost.objects.all()
     paginator = Paginator(posts_list, 6)  # Show 6 posts per page

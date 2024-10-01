@@ -47,16 +47,16 @@ class Routines(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     description = models.CharField(max_length=500, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/routine/')
-    favorites = models.ManyToManyField(User, related_name='favourite_routines', blank=True)
     instructions = models.TextField(blank=True, null=True)  
     benefits = models.TextField(blank=True, null=True)  
-    popularity_count = models.PositiveIntegerField(default=0)
+    popularity_count = models.PositiveIntegerField(default=0) # This area stores count of how often the routine has been added to a workout (popularity).
 
     def __str__(self):
         return self.routine
     
     class Meta:
         verbose_name_plural = 'routines'
+
 
 
 class Post(models.Model):
@@ -115,13 +115,15 @@ class WorkoutExercise(models.Model):
     sets = models.PositiveIntegerField(default=1)
 
     def save(self, *args, **kwargs):
-        if not self.pk: 
+        if not self.pk: # check if its new
             self.routine.popularity_count += 1  
-            self.routine.save()
+            self.routine.save() # save in database
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.routine.routine} - {self.reps} reps, {self.sets} sets'
+
+
 
 class WorkoutProgress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='workout_progress')
