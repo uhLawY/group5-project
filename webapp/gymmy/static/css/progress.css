@@ -8,6 +8,8 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 100%, rgba(0,212,255,1) 100%);
     color: #333;
+    padding: 20px; /* Added padding to all sides of the body */
+    padding-top: 80px;
 }
 
 .alert {
@@ -32,8 +34,8 @@ body {
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: 100px auto;
-    padding: 20px;
+    margin: 50px auto; /* Adjusted margin-top to add space between container and navbar */
+    padding: 30px; /* Added padding to the container */
     background: linear-gradient(90deg, rgba(173, 186, 255, 1) 0%, rgba(155, 167, 255, 1) 100%, rgba(204, 237, 255, 1) 100%); 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
@@ -43,10 +45,12 @@ h2, h3, h4 {
     text-align: center;
     margin-bottom: 20px;
     color: #000000;
+    padding: 10px; /* Added padding to headings */
 }
 
 form {
     margin-bottom: 20px;
+    padding: 20px; /* Added padding to the form */
 }
 
 label {
@@ -57,7 +61,7 @@ label {
 
 select, input[type="number"], button {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Increased padding for inputs */
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -75,6 +79,7 @@ button {
     color: #fff;
     border: none;
     cursor: pointer;
+    padding: 12px; /* Increased padding for buttons */
     transition: background-color 0.3s ease;
 }
 
@@ -85,7 +90,7 @@ button:hover {
 .btn-reset {
     background-color: #dc3545;
     color: #fff;
-    padding: 8px 12px;
+    padding: 10px 12px; /* Increased padding for reset button */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -100,6 +105,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    padding: 10px; /* Added padding to the table */
 }
 
 thead {
@@ -115,4 +121,75 @@ thead th, tbody td {
 
 tbody tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        margin: 50px auto; /* Adjusted margin-top for mobile */
+        padding: 20px;
+    }
+
+    h2, h3, h4 {
+        font-size: 1.2rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    select, input[type="number"], button {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    thead th, tbody td {
+        padding: 10px;
+    }
+
+    .btn-reset {
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    h2, h3, h4 {
+        font-size: 1rem;
+    }
+
+    select, input[type="number"], button {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+
+    thead th, tbody td {
+        padding: 8px;
+    }
+
+    .btn-reset {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+
+    /* Make the table scrollable horizontally on small screens */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }
