@@ -1,37 +1,41 @@
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-  }
-  
-body{
-      height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: rgb(2,0,36);
-      background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(2,2,61,1) 100%, rgba(0,212,255,1) 100%);
-      color: aliceblue;
-      display: flex;
-      justify-content: center;
-      align-items:center;
 }
-.wrapper{
+
+body {
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(2, 2, 61, 1) 100%, rgba(0, 212, 255, 1) 100%);
+    color: aliceblue;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: row;
     gap: 120px;
     margin-top: 50px;
+    padding: 20px; /* Added padding for small screens */
 }
-.container{
+
+.container {
     height: 270px;
     width: 280px;
     perspective: 700px;
 }
-.container:hover > .card{
+
+.container:hover > .card {
     cursor: pointer;
     transform: rotateY(180deg);
 }
-.card{
+
+.card {
     height: 100%;
     width: 100%;
     position: relative;
@@ -40,28 +44,57 @@ body{
     margin: 20px;
 }
 
-.card:hover{
-    cursor: pointer;
-}
-
-.front, .back{
+.front, .back {
     height: 100%;
     width: 100%;
     border-radius: 5rem;
     box-shadow: 0 0 5px 2px rgba(50, 50, 50, 0.25);
-    position:absolute;
+    position: absolute;
     backface-visibility: hidden;
 }
 
-img{
+img {
     border-radius: 5rem;
+    width: 100%; /* Make sure images are responsive */
+    height: auto;
 }
 
-.back{
+.back {
     background-color: rgb(0, 44, 242);
     transform: rotateY(180deg);
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    body {
+        height: auto; /* Allow the body to scroll if content overflows */
+    }
+
+    .wrapper {
+        flex-direction: column; /* Stack cards vertically */
+        gap: 40px; /* Reduce gap between cards */
+        margin-top: 20px; /* Reduce top margin */
+        padding: 10px; /* Add more padding on smaller screens */
+    }
+
+    .container {
+        height: 220px; /* Reduce the size of cards */
+        width: 240px;
+    }
+
+    .card {
+        margin: 10px;
+    }
+
+    .front, .back {
+        border-radius: 3rem; /* Smaller border radius for mobile */
+    }
+
+    img {
+        border-radius: 3rem;
+    }
 }
