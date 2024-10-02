@@ -62,7 +62,7 @@ body {
   height: 100%;
   background: transparent;
   outline: none;
-  border: 2px solid rbga(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 40px;
   font-size: 16px;
   color: #fff;
@@ -97,7 +97,7 @@ body {
 
 .login-form .register-link {
   font-size: 14.5px;
-  text-align:  center;
+  text-align: center;
 }
 
 .register-link p a {
@@ -111,13 +111,74 @@ body {
   text-decoration: underline;
 }
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  body {
+    padding: 0 10px;
+    background-size: cover;
+    background-position: center;
+  }
 
+  .login-form {
+    width: 100%; /* Make the form take the full width */
+    max-width: 350px; /* Add a max-width to prevent overflow */
+    padding: 20px;
+  }
 
+  .login-form h1 {
+    font-size: 28px; /* Adjust the font size for mobile */
+  }
 
+  .login-form .input-box {
+    margin: 20px 0;
+  }
 
+  .input-box input {
+    font-size: 14px; /* Reduce font size on mobile */
+    padding: 15px 40px 15px 15px; /* Reduce padding */
+  }
 
+  .input-box i {
+    font-size: 18px; /* Adjust icon size */
+    right: 15px; /* Adjust positioning */
+  }
 
+  .login-form .btn {
+    height: 40px; /* Reduce button size */
+    font-size: 16px;
+  }
 
+  .register-link p a {
+    font-size: 14px; /* Adjust link font size */
+  }
+}
 
+@media (max-width: 480px) {
+  .login-form {
+    max-width: 300px;
+    padding: 15px;
+  }
 
+  .login-form h1 {
+    font-size: 24px;
+  }
 
+  .input-box input {
+    font-size: 12px;
+    padding: 12px 35px 12px 12px;
+  }
+
+  .input-box i {
+    font-size: 16px;
+    right: 10px;
+  }
+
+  .login-form .btn {
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .register-link p a {
+    font-size: 12px;
+  }
+}
