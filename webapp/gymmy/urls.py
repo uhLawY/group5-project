@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import profile_front, copy_workout , report_flexcam_post
+from .views import profile_front, copy_workout , report_flexcam_post, delete_flexcam_post
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -32,7 +32,7 @@ urlpatterns = [
     path('copy_workout/<int:workout_id>/', copy_workout, name='copy_workout'),
     path('report-flexcam-post/<int:post_id>/', report_flexcam_post, name='report_flexcam_post'),
     path('progress/overall/', views.overallstats, name='overallstats'),
-    
+     path('delete-flexcam-post/<int:post_id>/', delete_flexcam_post, name='delete_flexcam_post'),
     ]
 
 

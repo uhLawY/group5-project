@@ -446,3 +446,14 @@ def report_flexcam_post(request, post_id):
     except Exception as e:
         print(f'Error sending email: {str(e)}')  # Log the error
         return JsonResponse({'message': 'There was an error submitting your report.'}, status=500)
+
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from .models import FlexcamPost
+
+def delete_flexcam_post(request, post_id):
+    if request.method == 'POST':
+        post = get_object_or_404(FlexcamPost, id=post_id, author=request.user)
+        post.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
