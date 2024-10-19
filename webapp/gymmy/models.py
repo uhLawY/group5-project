@@ -70,7 +70,8 @@ class Post(models.Model):
 
 
 
-# Models for Flexcam page
+from PIL import Image
+
 class FlexcamPost(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='uploads/flexcam/')
@@ -78,7 +79,6 @@ class FlexcamPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='flexcam_likes', blank=True)
     
-
     def __str__(self):
         return self.title
 
@@ -90,6 +90,22 @@ class FlexcamPost(models.Model):
 
     class Meta:
         ordering = ['-date_posted']  # Orders posts with the latest first
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # Call the original save method to save the post
+
+        # Resize the image if necessary
+        img = Image.open(self.image.path)
+        output_size = (800, 450)  # Set your desired output size here
+
+        # If the image is portrait, resize it to landscape
+        if img.height > img.width:
+            img = img.resize(output_size, Image.LANCZOS)  # Use LANCZOS instead of ANTIALIAS
+        else:
+            img.thumbnail(output_size, Image.LANCZOS)  # Use LANCZOS instead of ANTIALIAS
+
+        img.save(self.image.path)  # Save the resized image back to the same path
+
 
 
 class Comment(models.Model):

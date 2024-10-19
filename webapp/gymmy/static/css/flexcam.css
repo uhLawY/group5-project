@@ -93,17 +93,38 @@
 
 /* Post Comments */
 .post-comments {
-    padding: 0 15px 15px;
+    padding: 0 15px 10px;
+    max-height: calc(3 * 40px); /* Show space for 3 comments, assuming each comment is 40px high */
+    overflow-y: auto;  /* Enable vertical scrolling if more than 3 comments */
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
+/* Comment */
 .comment {
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Reduced the margin between comments */
+    padding: 5px 0; /* Add a bit of padding to make the text more readable */
+    min-height: 40px; /* Set a minimum height for each comment */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space the author and content efficiently */
 }
 
+/* Comment Author and Content */
 .comment-author {
     font-weight: bold;
-    margin-right: 5px;
+    margin-right: 8px;
 }
+
+.comment-content {
+    flex: 1; /* Make the comment content take up the remaining space */
+    font-size: 14px; /* Slightly smaller font for compactness */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis if the comment is too long to fit */
+}
+
 
 .pagination {
     display: flex;
